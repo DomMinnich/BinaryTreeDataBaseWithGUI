@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
 public class DataBase {
 SetArr<Employee> employeesArray = new SetArr<Employee>();
 
