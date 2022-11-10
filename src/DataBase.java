@@ -1,3 +1,7 @@
+import java.util.Scanner;
+
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 public class DataBase {
 SetArr<Employee> employeesArray = new SetArr<Employee>();
 
@@ -6,11 +10,29 @@ public DataBase(String fileName) {
     employeesArray = FileIO.readInFile(fileName);
 }
 
-//make a binary tree using the employeesArray
-public BinaryTree<Employee> makeTree() {
-    BinaryTree<Employee> tree = new BinaryTree<Employee>();
-    for (int i = 0; i < employeesArray.size(); i++) {
-        tree.insert(employeesArray.get(i));
-    }
-    return tree;
+//return the employeesArray
+public SetArr<Employee> getEmployeesArray() {
+    return employeesArray;
+}
+
+
+
+
+public static void main(String[] args) {
+   //get the file name from user
+    //create a new DataBase object
+    //call the printEmployees method
+
+    System.out.println("Enter the file name: ");
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("Enter the file name: ");
+    String fileName = scanner.nextLine();
+    DataBase dataBaseArr = new DataBase(fileName);
+    System.out.println("employee first name = "+dataBaseArr.getEmployeesArray().retreiveAtIndex(0).getFirstName());
+    
+
+
+    
+}
+
 }

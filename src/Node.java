@@ -1,5 +1,6 @@
 //Generic Nodes for Binary Search Tree
 
+/* 
 public class Node<T> {
     private T data;
     private Node<T> left;
@@ -35,3 +36,5 @@ public class Node<T> {
         this.right = right;
     }
 }
+
+*/

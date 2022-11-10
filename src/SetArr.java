@@ -69,7 +69,7 @@ public class SetArr<E> {           //Array that holds the emplyee data
         return false;
     }
 
-    public E retreive(E item) {
+    public E retreiveItem(E item) {
         for (int i = 0; i < size; i++) {
             if (set[i].equals(item)) {
                 return set[i];
@@ -77,4 +77,10 @@ public class SetArr<E> {           //Array that holds the emplyee data
         }
         return null;
     }
+
+    //retreive the item at the index
+    public E retreiveAtIndex(int index) {
+        return set[index];
+    }
+
 }
