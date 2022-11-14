@@ -8,12 +8,17 @@ import java.util.Scanner;
 //ex: EmployeeID = "M-ABCA-01"
 //then add the employee to the set
 //return the set
+
+
 public class FileIO {
-    public static SetArr<Employee> readInFile(String fileName) {
+    private static File fileName;
+    
+
+    public static SetArr<Employee> readInFile(File fileName) {
         SetArr<Employee> employeesArray = new SetArr<Employee>();
         try {
-            File file = new File(fileName);
-            Scanner scanner = new Scanner(file);
+            //File file = new File(fileName);
+            Scanner scanner = new Scanner(fileName);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] employeeInfo = line.split(" ");
@@ -22,7 +27,7 @@ public class FileIO {
                 String Position = employeeInfo[2];
                 String Site = employeeInfo[3];
                 String EmployeeID = Site.substring(0, 1) + "-" + FirstName.substring(0, 3).toUpperCase() + LastName.substring(0, 1).toUpperCase() + "-" + "01";
-                Employee employee = new Employee(EmployeeID, FirstName, LastName, Position, Site);
+                Employee employee = new Employee(EmployeeID, FirstName, LastName, Position, Site, false);
                 employeesArray.add(employee);
                 System.out.println("employee added");
                 System.out.println(employee.toString());
@@ -31,6 +36,28 @@ public class FileIO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    
         return employeesArray;
     }
+
+
+
+    //set file method
+    public static void setFile(File fileName) {
+        FileIO.fileName = fileName;
+    }
+
+    //get file method
+
+    static public File getFile() {
+        return fileName;
+    }
+
+    
+
+
+
+
+
+
 }

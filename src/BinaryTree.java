@@ -2,18 +2,22 @@ class BtNode<E>{
     private E data;
     private BtNode<E> left;
     private BtNode<E> right;
+    //add static variable to count the number of nodes
+     static int count = 0;
     
     public BtNode(E data){
         this.data = data;
         left = null;
         right = null;
+        //increment the count
+        count++;
     }
     
     public E getData(){
         return data;
     }
     
-    public void setData(E data){
+    public void setData(E data){ 
         this.data = data;
     }
     
@@ -113,7 +117,20 @@ public class BinaryTree<E extends Comparable<E>> {
             printTree(node.getRight());
         }
     }
-    
+
+    //toString method
+    public String treeToString(){
+        return toString(root);
+    }
+
+    private String toString(BtNode<E> node){
+        if(node == null){
+            return "";
+        }else{
+            return toString(node.getLeft()) + node.getData() + " " + toString(node.getRight());
+        }
+    }
+
     public boolean search(E data){
         return search(root, data);
     }
@@ -134,6 +151,59 @@ public class BinaryTree<E extends Comparable<E>> {
         }
         return found;
     }
+
+    public int findPosition(E data){
+        return findPosition(root, data, 1);
+    }
+
+    private int findPosition(BtNode<E> node, E data, int position){
+        if(node == null){
+            return -1;
+        }else{
+            if(data.compareTo(node.getData()) < 0){
+                position = findPosition(node.getLeft(), data, position * 2);
+            }else if(data.compareTo(node.getData()) > 0){
+                position = findPosition(node.getRight(), data, position * 2 + 1);
+            }else{
+                return position;
+            }
+        }
+        return position;
+    }
+
+    //find recored number (just the findPosition method-1)
+    public int findRecordNumber(E data){
+        return findPosition(root, data, 1) - 1;
+    }
+
+
+
+    //find the number of nodes in the tree
+    public int countNodes(){
+        return BtNode.count;
+    }
+
+
+
+    //find the number of leaves in the tree
+
+    public int countLeaves(){
+        return countLeaves(root);
+    }
+
+    private int countLeaves(BtNode<E> node){
+        if(node == null){
+            return 0;
+        }else if(node.getLeft() == null && node.getRight() == null){
+            return 1;
+        }else{
+            return countLeaves(node.getLeft()) + countLeaves(node.getRight());
+        }
+    }
+
+    //find the number of full nodes in the tree
+
+
 
 }
 

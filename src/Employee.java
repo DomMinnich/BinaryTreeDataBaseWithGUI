@@ -4,17 +4,19 @@ public class Employee {
     String LastName; // Last Name
     String Position; // Position
     String Site; // Site
+    Boolean fired = false; // Not Fired By Default
 
     //the employees id will be the first letter of the site, then a "-" then the first 3letters of their first name then the first letter of their last name then a "-" then a 2 digit number representing how many of the same employee id there are
     //ex: EmployeeID = "M-ABCA-01"
     //ex: EmployeeID = "M-ABCA-02"
 
-    public Employee(String EmployeeID, String FirstName, String LastName, String Position, String Site) {
+    public Employee(String EmployeeID, String FirstName, String LastName, String Position, String Site, Boolean fired) {
         this.EmployeeID = EmployeeID;
         this.FirstName = FirstName;
         this.LastName = LastName;
         this.Position = Position;
         this.Site = Site;
+        this.fired = fired;
     }
 
     public String getEmployeeID() {
