@@ -59,6 +59,17 @@ public class Employee {
         Site = site;
     }
 
+    // fired getter and setter
+
+    public Boolean getFired() {
+        return fired;
+    }
+
+    public void setFired(Boolean fired) {
+        this.fired = fired;
+    }
+    
+
     public String toString() {
         return EmployeeID + " " + FirstName + " " + LastName + " " + Position + " " + Site;
     }

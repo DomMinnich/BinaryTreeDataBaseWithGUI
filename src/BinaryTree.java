@@ -109,6 +109,8 @@ public class BinaryTree<E extends Comparable<E>> {
             printTree(root);
         }
     }
+
+    
     
     private void printTree(BtNode<E> node){
         if(node != null){
@@ -119,7 +121,7 @@ public class BinaryTree<E extends Comparable<E>> {
     }
 
     //toString method
-    public String treeToString(){
+    public String toString(){
         return toString(root);
     }
 
@@ -127,30 +129,51 @@ public class BinaryTree<E extends Comparable<E>> {
         if(node == null){
             return "";
         }else{
-            return toString(node.getLeft()) + node.getData() + " " + toString(node.getRight());
+            return toString(node.getLeft()) + node.getData() + toString(node.getRight());
+        }
+    }
+    
+
+    //search method using a given String as a parameter
+    public boolean search(String data){
+        return search(root, data);
+    }
+
+    private boolean search(BtNode<E> node, String data){
+        if(node == null){
+            return false;
+        }else{
+            if(data.compareTo((String) node.getData()) < 0){
+                return search(node.getLeft(), data);
+            }else if(data.compareTo((String) node.getData()) > 0){
+                return search(node.getRight(), data);
+            }else{
+                return true;
+            }
         }
     }
 
-    public boolean search(E data){
-        return search(root, data);
-    }
+
+    // public boolean search(E data){
+    //     return search(root, data);
+    // }
     
-    private boolean search(BtNode<E> node, E data){
-        boolean found = false;
-        while((node != null) && !found){
-            E nodeData = node.getData();
-            if(data.compareTo(nodeData) < 0){
-                node = node.getLeft();
-            }else if(data.compareTo(nodeData) > 0){
-                node = node.getRight();
-            }else{
-                found = true;
-                break;
-            }
-            found = search(node, data);
-        }
-        return found;
-    }
+    // private boolean search(BtNode<E> node, E data){
+    //     boolean found = false;
+    //     while((node != null) && !found){
+    //         E nodeData = node.getData();
+    //         if(data.compareTo(nodeData) < 0){
+    //             node = node.getLeft();
+    //         }else if(data.compareTo(nodeData) > 0){
+    //             node = node.getRight();
+    //         }else{
+    //             found = true;
+    //             break;
+    //         }
+    //         found = search(node, data);
+    //     }
+    //     return found;
+    // }
 
     public int findPosition(E data){
         return findPosition(root, data, 1);
