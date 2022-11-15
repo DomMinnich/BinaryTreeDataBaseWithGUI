@@ -35,28 +35,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class Gui extends Application {
-    File file;
 
-
-    public File setFileG(File file){
-        return this.file = file;
-    }
-
-    //get file method
-
-    public File getFileG() {
-        return file;
-    }
-
-    DataBase dataBase = new DataBase();
+    // make binarytree variable
+    BinaryTree<String> binaryTree = new BinaryTree<String>();
+    // make setArr variable
+    SetArr<Employee> employeesArray = new SetArr<Employee>();
 
     // ! Get the file of employee data
 
     // make variable for getBinaryTree
-    BinaryTree<String> binaryTree = dataBase.getBinaryTree();
-    SetArr<Employee> employeesArray = dataBase.getEmployeesArray();
-
-    Label treeString = new Label(binaryTree.treeToString());
 
     // ! Start Method
     public void start(Stage primaryStage) throws Exception {
@@ -131,19 +118,20 @@ public class Gui extends Application {
                 // set mazeCount to the number of mazes to be read in
                 // setMazeCount(Integer.parseInt(numOfMazes.getEditor().getText()));
 
-
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Open Resource File");
-                File file = fileChooser.showOpenDialog(null);
-                setFileG(file);
-        
-                
-                
-                // FileIO.setFile(file);
-                // FileIO.readInFile(file);
-
-                scrollBarPane.getChildren().add(treeString);
+                // FileIO fIO = new FileIO();
+                // fIO.readInFile();
+                // FileChooser fileChooser = new FileChooser();
+                // fileChooser.setTitle("Open Resource File");
+                // File file = fileChooser.showOpenDialog(null);
+                // fIO.setFile(file);
+                // System.out.println("set the file in gui");
+                DataBase dataBase = new DataBase();
+                SetArr<Employee> employeesArray = dataBase.getEmployeesArray();
+                System.out.println("this is the tostring for arr");
+                System.out.println(employeesArray.toString());
                 BinaryTree<String> binaryTree = dataBase.getBinaryTree();
+                Label treeString = new Label(binaryTree.treeToString());
+                scrollBarPane.getChildren().add(treeString);
                 System.out.println("tree prints");
                 binaryTree.printTree();
 

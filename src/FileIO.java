@@ -1,24 +1,25 @@
 import java.io.File;
 import java.util.Scanner;
 
-// get file from scanner
-//each line is an employee
-//each line is in the format of "FirstName,LastName,Position,Site"
-//the employeeID is the first letter of the site, then a "-" then the first 3letters of their first name then the first letter of their last name then a "-" then a 2 digit number representing how many of the same employee id there are
-//ex: EmployeeID = "M-ABCA-01"
-//then add the employee to the set
-//return the set
-
+import javafx.stage.FileChooser;
 
 public class FileIO {
-    private static File fileName;
-    
 
-    public static SetArr<Employee> readInFile(File fileName) {
+    File fileName;
+
+    public SetArr<Employee> readInFile() {
         SetArr<Employee> employeesArray = new SetArr<Employee>();
         try {
-            //File file = new File(fileName);
-            Scanner scanner = new Scanner(fileName);
+
+            // try putting filechooser withing the try block
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Resource File");
+            File file = fileChooser.showOpenDialog(null);
+            setFile(file);
+            System.out.println("set the file in gui");
+
+            Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] employeeInfo = line.split(" ");
@@ -26,7 +27,8 @@ public class FileIO {
                 String LastName = employeeInfo[1];
                 String Position = employeeInfo[2];
                 String Site = employeeInfo[3];
-                String EmployeeID = Site.substring(0, 1) + "-" + FirstName.substring(0, 3).toUpperCase() + LastName.substring(0, 1).toUpperCase() + "-" + "01";
+                String EmployeeID = Site.substring(0, 1) + "-" + FirstName.substring(0, 3).toUpperCase()
+                        + LastName.substring(0, 1).toUpperCase() + "-" + "01";
                 Employee employee = new Employee(EmployeeID, FirstName, LastName, Position, Site, false);
                 employeesArray.add(employee);
                 System.out.println("employee added");
@@ -36,28 +38,22 @@ public class FileIO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
+
         return employeesArray;
     }
 
+    // set file method
 
-
-    //set file method
-    public static void setFile(File fileName) {
-        FileIO.fileName = fileName;
+    public void setFile(File fileName) {
+        System.out.println("setFile was called");
+        this.fileName = fileName;
     }
 
-    //get file method
+    // get file method
 
-    static public File getFile() {
+    public File getFile() {
+        System.out.println("getFile was called");
         return fileName;
     }
-
-    
-
-
-
-
-
 
 }

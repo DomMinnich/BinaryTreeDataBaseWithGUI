@@ -1,28 +1,21 @@
 import java.io.File;
 
 public class DataBase {
+
 SetArr<Employee> employeesArray = new SetArr<Employee>();
-
-
 FileIO fileIO = new FileIO();
 
+public DataBase() {
+    employeesArray = fileIO.readInFile();
+}
 
-Gui gui = new Gui();
-
-
-File file = gui.getFileG();
-
-
-
-FileIO.readInFile(file);
 
 
 //return the employeesArray
 public SetArr<Employee> getEmployeesArray() {
     return employeesArray;
 }
-
-
+//return binary search tree
 public BinaryTree<String> getBinaryTree() {
     BinaryTree<String> binaryTree = new BinaryTree<String>();
     for (int i = 0; i < employeesArray.size(); i++) {
@@ -35,4 +28,3 @@ public BinaryTree<String> getBinaryTree() {
 }
 
 }
-
