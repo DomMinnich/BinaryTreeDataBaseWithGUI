@@ -45,11 +45,13 @@ import javafx.util.Duration;
 
 public class Gui extends Application {
 
-    //setter and getter for and Employee object
+    // setter and getter for and Employee object
     private Employee employee;
+
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
+
     public Employee getEmployee() {
         return employee;
     }
@@ -81,10 +83,6 @@ public class Gui extends Application {
         return employeesArray;
     }
 
-    // ! Get the file of employee data
-
-    // make variable for getBinaryTree
-
     // ! Start Method
     public void start(Stage primaryStage) throws Exception {
 
@@ -92,15 +90,14 @@ public class Gui extends Application {
         Font font = Font.font("yugothic", FontWeight.BOLD, FontPosture.ITALIC, 10);
         Font font2 = Font.font("Monospaced", FontWeight.BOLD, FontPosture.REGULAR, 30);
         Font font3 = Font.font("Monospaced", FontWeight.BOLD, FontPosture.REGULAR, 60);
-
-        // Labels
+        Color rgb = Color.rgb(65, 126, 192);
 
         // Boxes
         HBox hb = new HBox();
         VBox vbTop = new VBox();
         VBox vbBottom = new VBox();
         VBox vb = new VBox();
-        BackgroundFill background = new BackgroundFill(Color.LIGHTGREY, null, null);
+        BackgroundFill background = new BackgroundFill(rgb, null, null);
         vb.setBackground(new Background(background));
 
         // Scrolling Pane
@@ -128,8 +125,13 @@ public class Gui extends Application {
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background arrowBg = new Background(bg3);
 
-        // Image Panes
+        // Arrow2 Png
+        Image image4 = new Image("arrow1.png", 120, 100, false, false);
+        BackgroundImage bg4 = new BackgroundImage(image4, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        Background arrowBg2 = new Background(bg4);
 
+        // Image Panes
         Pane blueStart = new Pane();
         blueStart.setMinSize(2000, 2000);
         blueStart.setMaxSize(2000, 2000);
@@ -149,22 +151,33 @@ public class Gui extends Application {
         arrow.translateYProperty().set(320);
         arrow.setBackground(arrowBg);
 
-        scrollBarPane.getChildren().addAll(blueStart, upload);
+        Pane arrow2 = new Pane();
+        arrow2.setMinSize(150, 100);
+        arrow2.setMaxSize(150, 100);
+        arrow2.setBackground(arrowBg2);
+        arrow2.setRotate(270);
+        arrow2.setTranslateX(-20);
+        arrow2.setScaleX(0.8);
+        arrow2.setScaleY(0.8);
+
+        // make timeline for arrow2 going up and down
+        Timeline timeline3 = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(arrow2.translateYProperty(), 0)),
+                new KeyFrame(Duration.seconds(1), new KeyValue(arrow2.translateYProperty(), 20)));
+        timeline3.setCycleCount(Timeline.INDEFINITE);
+        timeline3.setAutoReverse(true);
 
         // On Start
+        scrollBarPane.getChildren().addAll(blueStart, upload);
+
         Label st = new Label("UPLOAD YOUR FILE HERE");
         st.setFont(font2);
         st.setTextFill(Color.WHITE);
-        // set the position of the label above the upload button
         st.translateXProperty().set(350);
         st.translateYProperty().set(100);
-
         scrollBarPane.getChildren().add(st);
-
         Text sl = new Text("");
-
         sl.setFont(font);
-        Color rgb = Color.rgb(65, 126, 192);
         sl.setFill(rgb);
         scrollBarPane.getChildren().addAll(sl);
 
@@ -182,8 +195,6 @@ public class Gui extends Application {
             public void handle(ActionEvent e) {
                 scrollBarPane.getChildren().clear();
                 scrollBarPane.getChildren().addAll(sl, blueStart);
-
-                // TODO
                 DataBase dataBase = new DataBase();
                 setEmployeesArray(dataBase.getEmployeesArray());
                 setBinaryTree(dataBase.getBinaryTree());
@@ -192,7 +203,6 @@ public class Gui extends Application {
 
                 // timeline and animation for arrow to move a little left then right
                 Timeline timeline = new Timeline();
-                // run the animation for infinite times
                 timeline.setCycleCount(Timeline.INDEFINITE);
                 timeline.setAutoReverse(true);
                 KeyValue kv = new KeyValue(arrow.translateXProperty(), 850);
@@ -200,14 +210,11 @@ public class Gui extends Application {
                 timeline.getKeyFrames().add(kf);
                 timeline.play();
 
-                // timeline so that label success has looses opcity for 2 seconds
-
                 Label success = new Label("FILE UPLOADED SUCCESSFULLY");
                 success.setFont(font3);
                 success.setTextFill(Color.LIGHTGREEN);
                 success.translateXProperty().set(300);
                 success.translateYProperty().set(200);
-                // make label 600, by 200
                 success.setMinSize(600, 200);
                 success.setMaxSize(600, 200);
 
@@ -241,11 +248,9 @@ public class Gui extends Application {
         readEmployDataBt.setOnAction(readInputData);
         scrollBarPane.getChildren().add(readEmployDataBt);
 
-        // make timeline for the upload button
         Timeline timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setAutoReverse(true);
-        // grow and shrink the upload button and the image
         KeyValue kv = new KeyValue(upload.scaleXProperty(), 1.1);
         KeyValue kv2 = new KeyValue(upload.scaleYProperty(), 1.1);
         KeyValue kv3 = new KeyValue(readEmployDataBt.scaleXProperty(), 1.1);
@@ -258,78 +263,47 @@ public class Gui extends Application {
         timeline2.setAutoReverse(true);
         KeyValue kv11 = new KeyValue(upload.translateYProperty(), 210);
         KeyFrame kf12 = new KeyFrame(Duration.millis(1000), kv11);
-        // make upload image move a little up and down
         KeyValue kv13 = new KeyValue(readEmployDataBt.translateYProperty(), 210);
         KeyFrame kf14 = new KeyFrame(Duration.millis(1000), kv13);
         timeline2.getKeyFrames().add(kf12);
         timeline2.getKeyFrames().add(kf14);
-
-        // if mouse has not enetered the upload button, then play the timeline 2, else
-        // stop it
-
         if (readEmployDataBt.isHover() == false) {
             timeline2.play();
         }
-
         readEmployDataBt.setOnMouseEntered(e -> {
-            // grow the image
             upload.setScaleX(1.1);
             upload.setScaleY(1.1);
-            // grow the button
             readEmployDataBt.setScaleX(1.1);
             readEmployDataBt.setScaleY(1.1);
-            // set st text to "YEAH RIGHT THERE!"
             st.setText("YEAH RIGHT THERE!");
-            // recenter the text
             st.translateXProperty().set(400);
             st.translateYProperty().set(100);
-            // stop the timeline
             timeline.stop();
             timeline2.stop();
         });
 
         readEmployDataBt.setOnMouseExited(e -> {
-            // shrink the image
             upload.setScaleX(1);
             upload.setScaleY(1);
-            // shrink the button
             readEmployDataBt.setScaleX(1);
             readEmployDataBt.setScaleY(1);
-            // set st text to "UPLOAD YOUR FILE HERE"
-
             st.setText("NO NO, GO BACK! RIGHT HERE!");
-            // recenter the text
             st.translateXProperty().set(340);
             st.translateYProperty().set(100);
             timeline.play();
-
-            // make animation to grow and string the button and image
-
         });
 
-        // Button searchBt2 = new Button("Search");
-        // searchBt2.setFont(font);
-        // searchBt2.setMaxSize(120, 50);
-        // searchBt2.setMinSize(120, 50);
-        // // center the button
-        // searchBt2.setTranslateX(200);
-        // searchBt2.setTranslateY(300);
-
-        //////////////////// Find Path Single ////////////////////
+        //////////////////// SEARCH ////////////////////
         Button searchBt = new Button("Search");
         searchBt.setFont(font);
         searchBt.setMaxSize(120, 50);
         searchBt.setMinSize(120, 50);
-        // center the button
-        // searchBt.setTranslateX(200);
-        // searchBt.setTranslateY(300);
         Label employeeFound = new Label("");
+        Label employeeFound2 = new Label("Employee: ");
         EventHandler<ActionEvent> searchEmployees = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 scrollBarPane.getChildren().clear();
                 scrollBarPane.getChildren().addAll(sl, blueStart);
-
-                // label for the search bar
                 Label searchLabel = new Label("Search:");
                 searchLabel.setFont(font2);
                 searchLabel.setTranslateX(450);
@@ -342,54 +316,34 @@ public class Gui extends Application {
                 searchField.setTranslateY(300);
                 searchField.setMaxSize(200, 50);
                 searchField.setMinSize(200, 50);
-
                 scrollBarPane.getChildren().add(searchField);
-                
-
                 // check to see if enter was pressed in the search field
                 searchField.setOnKeyPressed(new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent event) {
                         if (event.getCode() == KeyCode.ENTER) {
-                            // make label of the binary tree
-                            // DataBase dataBase = new DataBase();
-                            Label b = new Label(getBinaryTreeG().toString());
-                            b.setFont(font2);
-                            b.setTextFill(Color.WHITE);
-                            scrollBarPane.getChildren().add(b);
-
                             if (!searchField.getText().isEmpty()
                                     && searchField.getText().matches("[A-Z]{1}-[A-Z]{4}-[0-9]{2}")) {
-                                System.out.println("passed 1");
-                                System.out.println("this is the text" + searchField.getText());
                                 if (binaryTree.search(searchField.getText()) == true) {
-                                    System.out.println("passed 2");
                                     Employee emp = employeesArray
                                             .retreiveAtIndex(binaryTree.findPosition(searchField.getText()) - 1);
-                                    // print emp
                                     System.out.println("emp = " + emp.toString());
-                                    // make label of the employee
-
                                     if (emp.getFired() == false) {
                                         setEmployee(emp);
-                                        System.out.println("passed 3");
                                         scrollBarPane.getChildren().clear();
                                         scrollBarPane.getChildren().addAll(sl, blueStart);
-                                        //set label text to "Employee: "+ emp.getFirstName() + " " + emp.getLastName()
-                                        employeeFound.setText("Employee: " + emp.getFirstName() + " " + emp.getLastName());
-                                        employeeFound.setFont(font2);
-                                        //center x
-                                        employeeFound.setTranslateX(450);
-                                        employeeFound.setTranslateY(150);
-                                        scrollBarPane.getChildren().add(employeeFound);
-
-                                        // Label empLabel = new Label(emp.toString());
-                                        // empLabel.setFont(font2);
-                                        // empLabel.setTextFill(Color.WHITE);
-                                        // empLabel.setTranslateX(20);
-                                        // empLabel.setTranslateY(400);
-                                        // scrollBarPane.getChildren().add(empLabel);
-
+                                        employeeFound.setText(emp.getFirstName() + " " + emp.getLastName());
+                                        employeeFound.setFont(font3);
+                                        employeeFound.setTextFill(Color.LIGHTGREEN);
+                                        employeeFound.setTranslateX(340);
+                                        employeeFound.setTranslateY(10);
+                                        employeeFound2.setFont(font3);
+                                        employeeFound2.setTextFill(Color.WHITE);
+                                        employeeFound2.setTranslateX(10);
+                                        employeeFound2.setTranslateY(10);
+                                        timeline3.play();
+                                        vbTop.getChildren().add(arrow2);
+                                        scrollBarPane.getChildren().addAll(employeeFound, employeeFound2);
                                     }
                                 }
                                 // if the employee is not found, display an error message
@@ -399,23 +353,20 @@ public class Gui extends Application {
                                             ButtonType.OK);
                                     a.showAndWait();
                                 }
+                                // if the format is not correct, display an error message
                             } else {
                                 Alert a = new Alert(Alert.AlertType.ERROR,
                                         "Employee ID Format Error",
                                         ButtonType.OK);
                                 a.showAndWait();
                             }
-
                         }
                     }
                 });
 
                 binaryTree.search(searchField.getText());
-                // scrollBarPane.getChildren().clear();
-                // scrollBarPane.getChildren().addAll(sl, blueStart, searchBt2);
             }
         };
-
         searchBt.setOnAction(searchEmployees);
 
         /////////////////////////// Quit Button ///////////////////////////
@@ -438,14 +389,13 @@ public class Gui extends Application {
         Text dataBoxTitle = new Text("Employee Data");
         Font font4 = Font.font("yugothic", FontWeight.BOLD, FontPosture.ITALIC, 17);
         dataBoxTitle.setFont(font4);
-        dataBoxTitle.setFill(Color.BLUE);
+        dataBoxTitle.setFill(Color.LIGHTGREEN);
         Text item = new Text();
         item.setFont(font);
         ComboBox<String> employDataBox = new ComboBox<String>();
         employDataBox.setMaxSize(120, 50);
         employDataBox.setMinSize(120, 50);
         employDataBox.getItems().addAll("ID", "First Name", "Last Name", "Position", "Site");
-      //  employDataBox.getSelectionModel().selectFirst();
         employDataBox.setOnAction(e -> {
             Label empData = new Label();
             empData.setFont(font2);
@@ -455,92 +405,52 @@ public class Gui extends Application {
 
             int itemSeleted = employDataBox.getSelectionModel().getSelectedIndex();
             switch (itemSeleted) {
-                
+
                 case 0:
                     item.setText("ID");
                     empData.setText("ID: " + getEmployee().getEmployeeID());
                     break;
                 case 1:
                     item.setText("First Name");
-                  //  scrollBarPane.getChildren().remove(empData);
+                    // scrollBarPane.getChildren().remove(empData);
                     empData.setText("First Name: " + getEmployee().getFirstName());
                     break;
                 case 2:
                     item.setText("Last Name");
-                  //  scrollBarPane.getChildren().remove(empData);
+                    // scrollBarPane.getChildren().remove(empData);
                     empData.setText("Last Name: " + getEmployee().getLastName());
                     break;
                 case 3:
                     item.setText("Position");
-                 //   scrollBarPane.getChildren().remove(empData);
+                    // scrollBarPane.getChildren().remove(empData);
                     empData.setText("Position: " + getEmployee().getPosition());
                     break;
                 case 4:
                     item.setText("Site");
-                 //   scrollBarPane.getChildren().remove(empData);
+                    // scrollBarPane.getChildren().remove(empData);
                     empData.setText("Site: " + getEmployee().getSite());
                     break;
 
             }
             scrollBarPane.getChildren().clear();
-            scrollBarPane.getChildren().addAll(sl, blueStart, employeeFound, empData);
+            // remove arrow2 from vbTop
+            vbTop.getChildren().remove(arrow2);
+            scrollBarPane.getChildren().addAll(sl, blueStart, employeeFound, empData, employeeFound2);
         });
-        // setMazeSelected(mazeSelected);
-        // if (mazeSelected > mazeCount) {
-        // // pop up error message
-        // System.out.println("Error Maze Not Imported On Slot Selected");
-        // Alert a = new Alert(Alert.AlertType.ERROR, "Error Maze Not Imported On Slot
-        // Selected",
-        // ButtonType.OK);
-        // a.showAndWait();
-        // } else {
-        // scrollBarPane.getChildren().clear();
-        // scrollBarPane.getChildren().addAll(sl, greyBack);
-        // sTLabel.setText("| Maze " + mazeSelected + " Selected");
-        // scrollBarPane.getChildren().addAll(blackPng, runningPacMan, pacManDude);
-        // try (Scanner fileInput = new Scanner(getFile())) {
-        // maze = new Maze(fileInput);
-        // maze.setMaze(maze);
-        // BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze,
-        // maze.getStart(), maze.getFinish());
-        // boolean b = runner.runMaze();
-        // if (solveAll == true && b == true) {
-        // mazeNormalString.setText(maze.toString());
-        // mazeNormalString.setTextFill(Color.CYAN);
-        // mazeSolvedString.setText(maze.toString(runner.pathTaken));
-        // scrollBarPane.getChildren().addAll(mazeSolvedString, mazeNormalString,
-        // titleHasSolution);
 
-        // } else if (solveAll == true && b == false) {
-        // mazeFailedString.setText(maze.toString());
-        // scrollBarPane.getChildren().addAll(mazeFailedString, titleNoSolution);
-
-        // } else {
-        // mazeNormalString.setText(maze.toString());
-        // scrollBarPane.getChildren().add(mazeNormalString);
-        // }
-
-        // } catch (FileNotFoundException e1) {
-        // e1.printStackTrace();
-        // }
-        // }
-
-        //////////////////// Find Path All ////////////////////
-        Button findPathAllBt = new Button(
-                "Find Path (All)");
-        findPathAllBt.setFont(font);
-        findPathAllBt.setMaxSize(120, 50);
-        findPathAllBt.setMinSize(120, 50);
+        //////////////////// Display ALl ////////////////////
+        Button DisplayAllBt = new Button(
+                "Display All");
+        DisplayAllBt.setFont(font);
+        DisplayAllBt.setMaxSize(120, 50);
+        DisplayAllBt.setMinSize(120, 50);
         EventHandler<ActionEvent> findPathAll = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                // solveAll = true;
-                // findPathAllBt.setTextFill(Color.RED);
-                // mazeSelectionCBox.getSelectionModel().clearSelection();
-                // scrollBarPane.getChildren().clear();
-                // scrollBarPane.getChildren().addAll(sl, greyBack, pacManMaze, titlePickAMaze);
+
+                // TODO: Display all employees in the tree as a chart like
             }
         };
-        findPathAllBt.setOnAction(findPathAll);
+        DisplayAllBt.setOnAction(findPathAll);
 
         //////////////////// Write Mazes ////////////////////
         Button writeDataBt = new Button(
@@ -608,7 +518,7 @@ public class Gui extends Application {
         // Stage Configuration
         vbTop.getChildren().addAll(dataBoxTitle, employDataBox);
         vbTop.setPadding(new Insets(20, 10, 250, 10));
-        vbBottom.getChildren().addAll(searchBt, findPathAllBt, writeDataBt, quitBt);
+        vbBottom.getChildren().addAll(searchBt, DisplayAllBt, writeDataBt, quitBt);
         vbBottom.setPadding(new Insets(0, 10, 0, 10));
         vb.getChildren().addAll(vbTop, vbBottom);
         hb.getChildren().addAll(scrollBar, vb);
