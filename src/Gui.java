@@ -24,6 +24,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
@@ -225,11 +226,12 @@ public class Gui extends Application {
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background arrowBg = new Background(bg3);
 
-        // Arrow2 Png
-        Image image4 = new Image("arrow1.png", 120, 100, false, false);
-        BackgroundImage bg4 = new BackgroundImage(image4, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-        Background arrowBg2 = new Background(bg4);
+        // // Arrow2 Png
+        // Image image4 = new Image("arrow1.png", 120, 100, false, false);
+        // BackgroundImage bg4 = new BackgroundImage(image4, BackgroundRepeat.NO_REPEAT,
+        // BackgroundRepeat.NO_REPEAT,
+        // BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        // Background arrowBg2 = new Background(bg4);
 
         // Image Panes
         Pane blueStart = new Pane();
@@ -251,24 +253,26 @@ public class Gui extends Application {
         arrow.translateYProperty().set(210);
         arrow.setBackground(arrowBg);
 
-        Pane arrow2 = new Pane();
-        arrow2.setMinSize(150, 100);
-        arrow2.setMaxSize(150, 100);
-        arrow2.setBackground(arrowBg2);
-        arrow2.setRotate(270);
-        arrow2.setTranslateX(-20);
-        arrow2.setScaleX(0.8);
-        arrow2.setScaleY(0.8);
+        // Pane arrow2 = new Pane();
+        // arrow2.setMinSize(150, 100);
+        // arrow2.setMaxSize(150, 100);
+        // arrow2.setBackground(arrowBg2);
+        // arrow2.setRotate(270);
+        // arrow2.setTranslateX(-20);
+        // arrow2.setScaleX(0.8);
+        // arrow2.setScaleY(0.8);
 
-        // make timeline for arrow2 going up and down
-        Timeline timeline3 = new Timeline(
-                new KeyFrame(Duration.ZERO, new KeyValue(arrow2.translateYProperty(), 0)),
-                new KeyFrame(Duration.seconds(1), new KeyValue(arrow2.translateYProperty(), 20)));
-        timeline3.setCycleCount(Timeline.INDEFINITE);
-        timeline3.setAutoReverse(true);
+        // // make timeline for arrow2 going up and down
+        // Timeline timeline3 = new Timeline(
+        // new KeyFrame(Duration.ZERO, new KeyValue(arrow2.translateYProperty(), 0)),
+        // new KeyFrame(Duration.seconds(1), new KeyValue(arrow2.translateYProperty(),
+        // 20)));
+        // timeline3.setCycleCount(Timeline.INDEFINITE);
+        // timeline3.setAutoReverse(true);
 
         // On Start
         scrollBarPane.getChildren().addAll(blueStart, help, upload);
+        Label dataBoxTitle = new Label("Employee Data");
 
         Label st = new Label("UPLOAD YOUR FILE HERE");
         st.setFont(font2);
@@ -413,6 +417,24 @@ public class Gui extends Application {
             shake.play();
         });
 
+        Timeline pulse = new Timeline();
+        pulse.setCycleCount(Timeline.INDEFINITE);
+        pulse.setAutoReverse(true);
+        // change color of dataBoxTitle to green then yellow, then red, then blue, then
+        // green
+        KeyValue kv005 = new KeyValue(dataBoxTitle.textFillProperty(), Color.GREEN);
+        KeyFrame kf006 = new KeyFrame(Duration.millis(1000), kv005);
+        KeyValue kv007 = new KeyValue(dataBoxTitle.textFillProperty(), Color.YELLOW);
+        KeyFrame kf008 = new KeyFrame(Duration.millis(2000), kv007);
+        KeyValue kv009 = new KeyValue(dataBoxTitle.textFillProperty(), Color.RED);
+        KeyFrame kf010 = new KeyFrame(Duration.millis(3000), kv009);
+        KeyValue kv011 = new KeyValue(dataBoxTitle.textFillProperty(), Color.BLUE);
+        KeyFrame kf012 = new KeyFrame(Duration.millis(4000), kv011);
+        pulse.getKeyFrames().add(kf006);
+        pulse.getKeyFrames().add(kf008);
+        pulse.getKeyFrames().add(kf010);
+        pulse.getKeyFrames().add(kf012);
+
         //////////////////// SEARCH ////////////////////
         Button searchBt = new Button("Search");
         searchBt.setFont(font);
@@ -426,10 +448,104 @@ public class Gui extends Application {
                 scrollBarPane.getChildren().addAll(sl, blueStart, help);
                 Label searchLabel = new Label("Search:");
                 searchLabel.setFont(font2);
-                searchLabel.setTranslateX(450);
+                searchLabel.setTranslateX(200);
                 searchLabel.setTranslateY(240);
                 searchLabel.setTextFill(Color.WHITE);
                 scrollBarPane.getChildren().add(searchLabel);
+
+                // new text field for search by position
+                TextField searchField2 = new TextField();
+                searchField2.setPromptText("Enter Position Ex: Manager");
+                searchField2.setTranslateX(200);
+                searchField2.setTranslateY(300);
+                searchField2.setMaxSize(200, 50);
+                searchField2.setMinSize(200, 50);
+                scrollBarPane.getChildren().add(searchField2);
+                searchField2.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event) {
+                        if (event.getCode() == KeyCode.ENTER) {
+                            if (!searchField2.getText().isEmpty()) {
+                                String pos = "";
+                                for (int i = 0; i < employeesArray.size(); i++) {
+                                    if (employeesArray.retreiveAtIndex(i).getPosition()
+                                            .equals(searchField2.getText())) {
+                                        pulse.play();
+                                        setEmployee(employeesArray.retreiveAtIndex(i));
+                                        scrollBarPane.getChildren().clear();
+                                        scrollBarPane.getChildren().addAll(sl, blueStart, help);
+                                        pos += employeesArray.retreiveAtIndex(i).getFirstName() + " "
+                                                + employeesArray.retreiveAtIndex(i).getLastName() + "\n";
+//TODO fix other search methos
+                                    }
+
+                                }
+                                employeeFound.setText(pos);
+                                if (pos == "") {
+                                    Alert a = new Alert(Alert.AlertType.ERROR,
+                                            "Invalid Position or Search Format", ButtonType.OK);
+                                    a.showAndWait();
+                                    // clear the text field
+                                    searchField2.clear();
+                                } else {
+                                    employeeFound.setFont(font3);
+                                    employeeFound.setTextFill(Color.LIGHTGREEN);
+                                    employeeFound.setTranslateX(340);
+                                    employeeFound.setTranslateY(10);
+                                    employeeFound2.setFont(font3);
+                                    employeeFound2.setTextFill(Color.WHITE);
+                                    employeeFound2.setTranslateX(10);
+                                    employeeFound2.setTranslateY(10);
+                                    scrollBarPane.getChildren().addAll(employeeFound, employeeFound2);
+                                }
+
+                            }
+                        }
+                    }
+                });
+
+                // new text field for search by site
+                TextField search3Field = new TextField();
+                search3Field.setPromptText("Enter Site Ex: Chicago");
+                search3Field.setTranslateX(700);
+                search3Field.setTranslateY(300);
+                search3Field.setMaxSize(200, 50);
+                search3Field.setMinSize(200, 50);
+                scrollBarPane.getChildren().add(search3Field);
+                search3Field.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event) {
+                        if (event.getCode() == KeyCode.ENTER) {
+                            if (!search3Field.getText().isEmpty()) {
+                                for (int i = 0; i < employeesArray.size(); i++) {
+                                    if (employeesArray.retreiveAtIndex(i).getSite() == search3Field.getText()) {
+                                        pulse.play();
+                                        setEmployee(employeesArray.retreiveAtIndex(i));
+                                        scrollBarPane.getChildren().clear();
+                                        scrollBarPane.getChildren().addAll(sl, blueStart, help);
+                                        employeeFound.setText(employeesArray.retreiveAtIndex(i).getFirstName() + " "
+                                                + employeesArray.retreiveAtIndex(i).getLastName());
+                                        employeeFound.setFont(font3);
+                                        employeeFound.setTextFill(Color.LIGHTGREEN);
+                                        employeeFound.setTranslateX(340);
+                                        employeeFound.setTranslateY(10);
+                                        employeeFound2.setFont(font3);
+                                        employeeFound2.setTextFill(Color.WHITE);
+                                        employeeFound2.setTranslateX(10);
+                                        employeeFound2.setTranslateY(10);
+                                        scrollBarPane.getChildren().addAll(employeeFound, employeeFound2);
+                                    } else {
+                                        Alert a = new Alert(Alert.AlertType.ERROR,
+                                                "Invalid Site or Search Format", ButtonType.OK);
+                                        a.showAndWait();
+                                        // clear the text field
+                                        search3Field.clear();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
 
                 // TODO: add other search functions (by name, by site, by position, etc)
 
@@ -452,6 +568,7 @@ public class Gui extends Application {
                                     Employee emp = employeesArray
                                             .retreiveAtIndex(binaryTree.getRecordNum(searchField.getText()));
                                     if (emp.getFired() == false) {
+                                        pulse.play();
                                         setEmployee(emp);
                                         scrollBarPane.getChildren().clear();
                                         scrollBarPane.getChildren().addAll(sl, blueStart, help);
@@ -464,8 +581,6 @@ public class Gui extends Application {
                                         employeeFound2.setTextFill(Color.WHITE);
                                         employeeFound2.setTranslateX(10);
                                         employeeFound2.setTranslateY(10);
-                                        timeline3.play();
-                                        vbTop.getChildren().add(arrow2);
                                         scrollBarPane.getChildren().addAll(employeeFound, employeeFound2);
                                     }
                                 }
@@ -475,20 +590,53 @@ public class Gui extends Application {
                                             "404 Not Found",
                                             ButtonType.OK);
                                     a.showAndWait();
+                                    // clear the text field
+                                    searchField.clear();
                                 }
                                 // if the format is not correct, display an error message
                             } else {
                                 Alert a = new Alert(Alert.AlertType.ERROR,
-                                        "Employee ID Format Error",
+                                        "Employee Search Format Error",
                                         ButtonType.OK);
                                 a.showAndWait();
+                                // clear the text field
+                                searchField.clear();
                             }
                         }
+
                     }
                 });
 
                 binaryTree.contains(searchField.getText());
+                // if any of the search fields are clicked, put the other search fields to half
+                // opacity
+                searchField.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        searchField.setOpacity(1);
+                        searchField2.setOpacity(0.5);
+                        search3Field.setOpacity(0.5);
+                    }
+                });
+                searchField2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        searchField2.setOpacity(1);
+                        searchField.setOpacity(0.5);
+                        search3Field.setOpacity(0.5);
+                    }
+                });
+                search3Field.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        search3Field.setOpacity(1);
+                        searchField.setOpacity(0.5);
+                        searchField2.setOpacity(0.5);
+                    }
+                });
+
             }
+
         };
         searchBt.setOnAction(searchEmployees);
 
@@ -510,10 +658,9 @@ public class Gui extends Application {
         });
 
         //////////////////// ComboBox ////////////////////
-        Text dataBoxTitle = new Text("Employee Data");
         Font font4 = Font.font("yugothic", FontWeight.BOLD, FontPosture.ITALIC, 17);
         dataBoxTitle.setFont(font4);
-        dataBoxTitle.setFill(Color.LIGHTGREEN);
+        dataBoxTitle.setTextFill(Color.LIGHTGREEN);
         Text item = new Text();
         item.setFont(font);
         ComboBox<String> employDataBox = new ComboBox<String>();
@@ -551,8 +698,11 @@ public class Gui extends Application {
                     break;
 
             }
+            // stop pulse animation
+            pulse.stop();
+            dataBoxTitle.setTextFill(Color.LIGHTGREEN);
             scrollBarPane.getChildren().clear();
-            vbTop.getChildren().remove(arrow2);
+            // vbTop.getChildren().remove(arrow2);
             scrollBarPane.getChildren().addAll(sl, blueStart, help, employeeFound, empData, employeeFound2);
         });
 
@@ -612,13 +762,13 @@ public class Gui extends Application {
                 siteLabel.setTranslateY(150);
 
                 for (int i = 0; i < employeesArray.size(); i++) {
-                    //if the employee is not firee
-                    if(employeesArray.retreiveAtIndex(i).getFired() == false){
+                    // if the employee is not firee
+                    if (employeesArray.retreiveAtIndex(i).getFired() == false) {
                         idStr += employeesArray.retreiveAtIndex(i).getEmployeeID() + "\n";
-                    lastNameStr += employeesArray.retreiveAtIndex(i).getLastName() + "\n";
-                    firstNameStr += employeesArray.retreiveAtIndex(i).getFirstName() + "\n";
-                    positionStr += employeesArray.retreiveAtIndex(i).getPosition() + "\n";
-                    siteStr += employeesArray.retreiveAtIndex(i).getSite() + "\n";
+                        lastNameStr += employeesArray.retreiveAtIndex(i).getLastName() + "\n";
+                        firstNameStr += employeesArray.retreiveAtIndex(i).getFirstName() + "\n";
+                        positionStr += employeesArray.retreiveAtIndex(i).getPosition() + "\n";
+                        siteStr += employeesArray.retreiveAtIndex(i).getSite() + "\n";
                     }
                 }
 
@@ -654,7 +804,7 @@ public class Gui extends Application {
                 } catch (FileNotFoundException ex) {
                     System.out.println("File not found");
                 }
-               primaryStage.close();
+                primaryStage.close();
             }
         };
         writeDataBt.setOnAction(write);
