@@ -4,13 +4,22 @@ class BtNode<E>{
     private BtNode<E> right;
     //add static variable to count the number of nodes
      static int count = 0;
+     int recordNum = 0;
     
     public BtNode(E data){
         this.data = data;
         left = null;
         right = null;
-        //increment the count
+        recordNum = count;
         count++;
+    }
+
+    public int getRecordNum(){
+        return recordNum;
+    }
+
+    public void setRecordNum(int recordNum){
+        this.recordNum = recordNum;
     }
     
     public E getData(){
@@ -110,8 +119,6 @@ public class BinaryTree<E extends Comparable<E>> {
         }
     }
 
-    
-    
     private void printTree(BtNode<E> node){
         if(node != null){
             printTree(node.getLeft());
@@ -132,81 +139,101 @@ public class BinaryTree<E extends Comparable<E>> {
             return toString(node.getLeft()) + node.getData() + toString(node.getRight());
         }
     }
-    
 
-    //search method using a given String as a parameter
-    public boolean search(String data){
-        return search(root, data);
+
+    //contains method to check if the tree contains a certain value
+    public boolean contains(E data){
+        return contains(root, data);
     }
 
-    private boolean search(BtNode<E> node, String data){
+    private boolean contains(BtNode<E> node, E data){
         if(node == null){
             return false;
         }else{
-            if(data.compareTo((String) node.getData()) < 0){
-                return search(node.getLeft(), data);
-            }else if(data.compareTo((String) node.getData()) > 0){
-                return search(node.getRight(), data);
+            if(data.compareTo(node.getData()) < 0){
+                return contains(node.getLeft(), data);
+            }else if(data.compareTo(node.getData()) > 0){
+                return contains(node.getRight(), data);
             }else{
                 return true;
             }
         }
     }
 
-
-    // public boolean search(E data){
-    //     return search(root, data);
-    // }
-    
-    // private boolean search(BtNode<E> node, E data){
-    //     boolean found = false;
-    //     while((node != null) && !found){
-    //         E nodeData = node.getData();
-    //         if(data.compareTo(nodeData) < 0){
-    //             node = node.getLeft();
-    //         }else if(data.compareTo(nodeData) > 0){
-    //             node = node.getRight();
-    //         }else{
-    //             found = true;
-    //             break;
-    //         }
-    //         found = search(node, data);
-    //     }
-    //     return found;
-    // }
-
-    public int findPosition(E data){
-        return findPosition(root, data, 1);
+    //check if tree contains a certain value and return the record number of that value
+    public int getRecordNum(E data){
+        return getRecordNum(root, data);
     }
 
-    private int findPosition(BtNode<E> node, E data, int position){
+    private int getRecordNum(BtNode<E> node, E data){
         if(node == null){
             return -1;
         }else{
             if(data.compareTo(node.getData()) < 0){
-                position = findPosition(node.getLeft(), data, position * 2);
+                return getRecordNum(node.getLeft(), data);
             }else if(data.compareTo(node.getData()) > 0){
-                position = findPosition(node.getRight(), data, position * 2 + 1);
+                return getRecordNum(node.getRight(), data);
             }else{
-                return position;
+                return node.getRecordNum();
             }
         }
-        return position;
     }
 
-    //find recored number (just the findPosition method-1)
-    public int findRecordNumber(E data){
-        return findPosition(root, data, 1) - 1;
-    }
 
+
+    // //TODO fix this method (running through if elses to the end not finding the node)
+
+    // public int retrievePosition(String data){
+    //     return retrievePosition(root, data);
+    // }
+
+    // private int retrievePosition(BtNode<E> node, String data){
+    //     if(node == null){
+    //         System.out.println("passed 1");
+    //         return -1;
+    //     }else{
+    //         System.out.println("passed 2");
+    //         if(data.compareTo((String) node.getData()) < 0){
+    //             return retrievePosition(node.getLeft(), data);
+    //         }else if(data.compareTo((String) node.getData()) > 0){
+    //             System.out.println("passed 3");
+    //             return retrievePosition(node.getRight(), data);
+    //         }else{
+    //             System.out.println("passed 4");
+    //             return BtNode.count;
+    //         }
+    //     }
+    // }
+
+    // public int findPosition(E data){
+    //     return findPosition(root, data, 1);
+    // }
+
+    // private int findPosition(BtNode<E> node, E data, int position){
+    //     if(node == null){
+    //         return -1;
+    //     }else{
+    //         if(data.compareTo(node.getData()) < 0){
+    //             position = findPosition(node.getLeft(), data, position * 2);
+    //         }else if(data.compareTo(node.getData()) > 0){
+    //             position = findPosition(node.getRight(), data, position * 2 + 1);
+    //         }else{
+    //             return position;
+    //         }
+    //     }
+    //     return position;
+    // }
+
+    // //find recored number (just the findPosition method-1)
+    // public int findRecordNumber(E data){
+    //     return findPosition(root, data, 1) - 1;
+    // }
 
 
     //find the number of nodes in the tree
     public int countNodes(){
         return BtNode.count;
     }
-
-
 
     //find the number of leaves in the tree
 
@@ -223,10 +250,6 @@ public class BinaryTree<E extends Comparable<E>> {
             return countLeaves(node.getLeft()) + countLeaves(node.getRight());
         }
     }
-
-    //find the number of full nodes in the tree
-
-
 
 }
 

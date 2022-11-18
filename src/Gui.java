@@ -10,15 +10,19 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -83,7 +87,6 @@ public class Gui extends Application {
         return employeesArray;
     }
 
-    // ! Start Method
     public void start(Stage primaryStage) throws Exception {
 
         // Main Font
@@ -100,12 +103,62 @@ public class Gui extends Application {
         BackgroundFill background = new BackgroundFill(rgb, null, null);
         vb.setBackground(new Background(background));
 
+        // make a check box
+
+        // TODO acending or decending order
+        CheckBox checkBox = new CheckBox("A");
+        // add the check box to the vb
+        vb.getChildren().add(checkBox);
+
         // Scrolling Pane
         Pane scrollBarPane = new Pane();
         ScrollPane scrollBar = new ScrollPane(scrollBarPane);
         scrollBar.setMaxSize(1100, 600);
         scrollBar.setMinSize(1100, 600);
         scrollBar.setFitToWidth(true);
+
+        Button help = new Button("?");
+        help.setTextFill(Color.FIREBRICK);
+        help.setMinSize(30, 30);
+        help.setMaxSize(30, 30);
+        help.setLayoutX(10);
+        help.setLayoutY(10);
+        Pane helpPane = new Pane();
+        ScrollPane helpScrollBar = new ScrollPane(helpPane);
+        helpScrollBar.setMaxSize(300, 200);
+        helpScrollBar.setMinSize(300, 200);
+        helpScrollBar.setFitToWidth(true);
+        Label commands = new Label();
+        commands.setText(
+                "Welcome to the Employee Database! \n\nHere are the Quick Command Shortcuts\n\nTo Enable Quick Commands Press \"ESC\"\n"
+                        +
+                        "To Disable Quick Commands Press \"ESC\" Again\n" +
+                        "To Insert an Employee Press \"I\"\n" +
+                        "To Delete an Employee Press \"D\"\n" +
+                        "To Search for an Employee Using Site Press \"S\"\n" +
+                        "To Search for an Employee Using Posistion Press \"P\"\n" +
+                        "To Search for an Employee Using ID Press \"F\"\n" +
+                        "To Save and Exit Press \"E\"\n" +
+                        "To Exit Without Saving Press \"Q\"\n\n\n");
+        helpPane.getChildren().add(commands);
+        //set pane background to sky blue
+        BackgroundFill background2 = new BackgroundFill(Color.LIGHTBLUE, null, null);
+        helpPane.setBackground(new Background(background2));
+        //set text color to white
+
+        helpScrollBar.setVisible(false);
+        help.setOnMouseEntered(e -> {
+            scrollBarPane.getChildren().add(helpScrollBar);
+            helpScrollBar.setVisible(true);
+            helpPane.toFront();
+
+        });
+
+        // on mouse exit for the helpscrollbar remove the helpPane
+        helpScrollBar.setOnMouseExited(e -> {
+            helpScrollBar.setVisible(false);
+            scrollBarPane.getChildren().remove(helpScrollBar);
+        });
 
         // Blue Background
         Image image1 = new Image("blue2.jpg", 2000, 2000, false, false);
@@ -168,7 +221,7 @@ public class Gui extends Application {
         timeline3.setAutoReverse(true);
 
         // On Start
-        scrollBarPane.getChildren().addAll(blueStart, upload);
+        scrollBarPane.getChildren().addAll(blueStart, help, upload);
 
         Label st = new Label("UPLOAD YOUR FILE HERE");
         st.setFont(font2);
@@ -194,7 +247,7 @@ public class Gui extends Application {
         EventHandler<ActionEvent> readInputData = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 scrollBarPane.getChildren().clear();
-                scrollBarPane.getChildren().addAll(sl, blueStart);
+                scrollBarPane.getChildren().addAll(sl, blueStart, help);
                 DataBase dataBase = new DataBase();
                 setEmployeesArray(dataBase.getEmployeesArray());
                 setBinaryTree(dataBase.getBinaryTree());
@@ -303,7 +356,7 @@ public class Gui extends Application {
         EventHandler<ActionEvent> searchEmployees = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 scrollBarPane.getChildren().clear();
-                scrollBarPane.getChildren().addAll(sl, blueStart);
+                scrollBarPane.getChildren().addAll(sl, blueStart, help);
                 Label searchLabel = new Label("Search:");
                 searchLabel.setFont(font2);
                 searchLabel.setTranslateX(450);
@@ -324,14 +377,26 @@ public class Gui extends Application {
                         if (event.getCode() == KeyCode.ENTER) {
                             if (!searchField.getText().isEmpty()
                                     && searchField.getText().matches("[A-Z]{1}-[A-Z]{4}-[0-9]{2}")) {
-                                if (binaryTree.search(searchField.getText()) == true) {
+                                if (binaryTree.contains(searchField.getText()) == true) {
+
                                     Employee emp = employeesArray
-                                            .retreiveAtIndex(binaryTree.findPosition(searchField.getText()) - 1);
-                                    System.out.println("emp = " + emp.toString());
+                                            .retreiveAtIndex(binaryTree.getRecordNum(searchField.getText()));
+                                    // print the received text
+                                    System.out.println(searchField.getText());
+                                    // print the retrived position -1
+                                    System.out.println(binaryTree.getRecordNum(searchField.getText()));
+                                    System.out.println("emp = " + emp.toStringEmp());
+
+                                    // for loop that prints every employee object in the array
+                                    for (int i = 0; i < employeesArray.size(); i++) {
+                                        System.out.println(employeesArray.retreiveAtIndex(i).toStringEmp());
+                                    }
+
+                                    System.out.println("emp = " + emp.toStringEmp());
                                     if (emp.getFired() == false) {
                                         setEmployee(emp);
                                         scrollBarPane.getChildren().clear();
-                                        scrollBarPane.getChildren().addAll(sl, blueStart);
+                                        scrollBarPane.getChildren().addAll(sl, blueStart, help);
                                         employeeFound.setText(emp.getFirstName() + " " + emp.getLastName());
                                         employeeFound.setFont(font3);
                                         employeeFound.setTextFill(Color.LIGHTGREEN);
@@ -364,7 +429,7 @@ public class Gui extends Application {
                     }
                 });
 
-                binaryTree.search(searchField.getText());
+                binaryTree.contains(searchField.getText());
             }
         };
         searchBt.setOnAction(searchEmployees);
@@ -375,8 +440,9 @@ public class Gui extends Application {
         quitBt.setMaxSize(120, 50);
         quitBt.setMinSize(120, 50);
         quitBt.setOnAction(e -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you really want to close this application?",
-                    ButtonType.YES, ButtonType.NO);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Do you really want to close this application?", ButtonType.YES,
+                    ButtonType.NO);
             ButtonType result = alert.showAndWait().orElse(ButtonType.NO);
             if (ButtonType.NO.equals(result)) {
                 e.consume();
@@ -435,7 +501,7 @@ public class Gui extends Application {
             scrollBarPane.getChildren().clear();
             // remove arrow2 from vbTop
             vbTop.getChildren().remove(arrow2);
-            scrollBarPane.getChildren().addAll(sl, blueStart, employeeFound, empData, employeeFound2);
+            scrollBarPane.getChildren().addAll(sl, blueStart, help, employeeFound, empData, employeeFound2);
         });
 
         //////////////////// Display ALl ////////////////////
@@ -447,6 +513,40 @@ public class Gui extends Application {
         EventHandler<ActionEvent> findPathAll = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
 
+                // new label that says "Employee DataBase"
+                Label employeeDataBase = new Label("Employee DataBase");
+                employeeDataBase.setFont(font3);
+                employeeDataBase.setTextFill(Color.LIGHTGREEN);
+                employeeDataBase.setTranslateX(10);
+                employeeDataBase.setTranslateY(10);
+
+                // new label saying "Employee ID, First Name, Last Name, Position, Site" with
+                // tabs in between
+                Label chartLabel = new Label("Employee ID\t\tLast Name\t\tFirst Name\t\tPosition\t\tSite");
+                // new font with size 15
+                Font font5 = Font.font("yugothic", FontWeight.BOLD, FontPosture.ITALIC, 15);
+                chartLabel.setFont(font5);
+                chartLabel.setTextFill(Color.LIGHTGREEN);
+                chartLabel.setTranslateX(10);
+                chartLabel.setTranslateY(80);
+                // new label for the employee data list
+                Label empDataList = new Label();
+                // for loop to display all the employees
+                scrollBarPane.getChildren().clear();
+                scrollBarPane.getChildren().addAll(sl, blueStart, help, employeeDataBase, chartLabel);
+                String tempStr = "";
+                for (int i = 0; i < employeesArray.size(); i++) {
+                    tempStr += employeesArray.retreiveAtIndex(i).toStringEmp();
+                }
+
+                empDataList.setText(tempStr);
+                empDataList.setFont(font5);
+                empDataList.setTextFill(Color.WHITE);
+                empDataList.setTranslateX(10);
+                empDataList.setTranslateY(150);
+                scrollBarPane.getChildren().add(empDataList);
+                // add to scroll bar pane
+
                 // TODO: Display all employees in the tree as a chart like
             }
         };
@@ -454,7 +554,7 @@ public class Gui extends Application {
 
         //////////////////// Write Mazes ////////////////////
         Button writeDataBt = new Button(
-                "Save Data");
+                "Save and Exit");
         writeDataBt.setFont(font);
         writeDataBt.setMaxSize(120, 50);
         writeDataBt.setMinSize(120, 50);
@@ -511,9 +611,16 @@ public class Gui extends Application {
                 } catch (FileNotFoundException e2) {
                     e2.printStackTrace();
                 }
+                quitBt.fire();
             }
         };
         writeDataBt.setOnAction(write);
+
+
+
+//TODO set each shortcut key to action
+
+
 
         // Stage Configuration
         vbTop.getChildren().addAll(dataBoxTitle, employDataBox);

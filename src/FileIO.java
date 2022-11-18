@@ -8,7 +8,7 @@ public class FileIO {
     File fileName;
 
     public SetArr<Employee> readInFile() {
-        SetArr<Employee> employeesArray = new SetArr<Employee>();
+        SetArr<Employee> employeesArray = new SetArr<Employee>(); 
         try {
 
             // try putting filechooser withing the try block

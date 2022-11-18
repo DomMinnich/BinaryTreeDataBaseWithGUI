@@ -55,7 +55,7 @@ public class Employee {
         return Site;
     }
 
-    public void setSite(String site) {
+    public void setSite(String site) { 
         Site = site;
     }
 
@@ -70,9 +70,10 @@ public class Employee {
     }
     
 
-    public String toString() {
-        return EmployeeID + " " + FirstName + " " + LastName + " " + Position + " " + Site;
+    public String toStringEmp() {
+        return EmployeeID + "\t\t" + FirstName + "\t\t" + LastName + "\t\t" + Position + "\t\t" + Site+"\n";
     }
+
 
     public boolean equals(Employee other) {
         return this.EmployeeID.equals(other.EmployeeID);
