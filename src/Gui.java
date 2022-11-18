@@ -569,29 +569,63 @@ public class Gui extends Application {
                 employeeDataBase.setTextFill(Color.LIGHTGREEN);
                 employeeDataBase.setTranslateX(10);
                 employeeDataBase.setTranslateY(10);
-                Label chartLabel = new Label("Employee ID\t\tLast Name\t\tFirst Name\t\tPosition\t\tSite");
+                Label chartLabel = new Label(
+                        "Employee ID\t\t  First Name\t\t       Last Name\t\t   Position\t\t       Site");
                 Font font5 = Font.font("yugothic", FontWeight.BOLD, FontPosture.ITALIC, 15);
                 chartLabel.setFont(font5);
-                chartLabel.setTextFill(Color.LIGHTGREEN);
+                chartLabel.setTextFill(Color.YELLOW);
                 chartLabel.setTranslateX(10);
                 chartLabel.setTranslateY(80);
-                Label empDataList = new Label();
+
                 scrollBarPane.getChildren().clear();
                 scrollBarPane.getChildren().addAll(sl, blueStart, help, employeeDataBase, chartLabel);
-                String tempStr = "";
+
+                Label idLabel = new Label("ID");
+                String idStr = "";
+                idLabel.setFont(font5);
+                idLabel.setTextFill(Color.WHITE);
+                idLabel.setTranslateX(10);
+                idLabel.setTranslateY(150);
+                Label lastNameLabel = new Label("Last Name");
+                String lastNameStr = "";
+                lastNameLabel.setFont(font5);
+                lastNameLabel.setTextFill(Color.WHITE);
+                lastNameLabel.setTranslateX(150);
+                lastNameLabel.setTranslateY(150);
+                Label firstNameLabel = new Label("First Name");
+                String firstNameStr = "";
+                firstNameLabel.setFont(font5);
+                firstNameLabel.setTextFill(Color.WHITE);
+                firstNameLabel.setTranslateX(300);
+                firstNameLabel.setTranslateY(150);
+                Label positionLabel = new Label("Position");
+                String positionStr = "";
+                positionLabel.setFont(font5);
+                positionLabel.setTextFill(Color.WHITE);
+                positionLabel.setTranslateX(450);
+                positionLabel.setTranslateY(150);
+                Label siteLabel = new Label("Site");
+                String siteStr = "";
+                siteLabel.setFont(font5);
+                siteLabel.setTextFill(Color.WHITE);
+                siteLabel.setTranslateX(600);
+                siteLabel.setTranslateY(150);
+
                 for (int i = 0; i < employeesArray.size(); i++) {
-                    tempStr += employeesArray.retreiveAtIndex(i).toStringEmp();
+                    idStr += employeesArray.retreiveAtIndex(i).getEmployeeID() + "\n";
+                    lastNameStr += employeesArray.retreiveAtIndex(i).getLastName() + "\n";
+                    firstNameStr += employeesArray.retreiveAtIndex(i).getFirstName() + "\n";
+                    positionStr += employeesArray.retreiveAtIndex(i).getPosition() + "\n";
+                    siteStr += employeesArray.retreiveAtIndex(i).getSite() + "\n";
                 }
 
-                empDataList.setText(tempStr);
-                empDataList.setFont(font5);
-                empDataList.setTextFill(Color.WHITE);
-                empDataList.setTranslateX(10);
-                empDataList.setTranslateY(150);
-                scrollBarPane.getChildren().add(empDataList);
-                // add to scroll bar pane
+                idLabel.setText(idStr);
+                lastNameLabel.setText(lastNameStr);
+                firstNameLabel.setText(firstNameStr);
+                positionLabel.setText(positionStr);
+                siteLabel.setText(siteStr);
 
-                // TODO: Display all employees in the tree as a chart like
+                scrollBarPane.getChildren().addAll(idLabel, lastNameLabel, firstNameLabel, positionLabel, siteLabel);
             }
         };
         DisplayAllBt.setOnAction(findPathAll);
@@ -645,19 +679,21 @@ public class Gui extends Application {
                 if (binaryTree.contains(result)) {
                     employeesArray.retreiveAtIndex(binaryTree.getRecordNum(result)).setFired(true);
                     binaryTree.delete(result);
-                    Label employeeDeleted = new Label("Would Not Want \nTo Be That Employee\n\t:(\nEmployee Fired & Deleted");
+                    Label employeeDeleted = new Label(
+                            "Would Not Want \nTo Be That Employee\n\t:(\nEmployee Fired & Deleted");
                     employeeDeleted.setFont(font3);
                     employeeDeleted.setTextFill(Color.LIGHTGREEN);
                     employeeDeleted.setTranslateX(100);
                     employeeDeleted.setTranslateY(200);
                     scrollBarPane.getChildren().clear();
                     scrollBarPane.getChildren().addAll(sl, blueStart, help, employeeDeleted);
-                   //make a timeline to slowly fade out the label
+                    // make a timeline to slowly fade out the label
                     FadeTransition fadeTransition = new FadeTransition(Duration.millis(4000), employeeDeleted);
                     fadeTransition.setFromValue(1.0);
                     fadeTransition.setToValue(0.0);
                     fadeTransition.play();
-                    //when the timeline is done remove the label from the pane and call search again
+                    // when the timeline is done remove the label from the pane and call search
+                    // again
                     fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
@@ -665,7 +701,6 @@ public class Gui extends Application {
                             searchBt.fire();
                         }
                     });
-
 
                 } else {
                     // pop up error message
