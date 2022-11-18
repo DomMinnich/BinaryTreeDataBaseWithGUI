@@ -612,11 +612,14 @@ public class Gui extends Application {
                 siteLabel.setTranslateY(150);
 
                 for (int i = 0; i < employeesArray.size(); i++) {
-                    idStr += employeesArray.retreiveAtIndex(i).getEmployeeID() + "\n";
+                    //if the employee is not firee
+                    if(employeesArray.retreiveAtIndex(i).getFired() == false){
+                        idStr += employeesArray.retreiveAtIndex(i).getEmployeeID() + "\n";
                     lastNameStr += employeesArray.retreiveAtIndex(i).getLastName() + "\n";
                     firstNameStr += employeesArray.retreiveAtIndex(i).getFirstName() + "\n";
                     positionStr += employeesArray.retreiveAtIndex(i).getPosition() + "\n";
                     siteStr += employeesArray.retreiveAtIndex(i).getSite() + "\n";
+                    }
                 }
 
                 idLabel.setText(idStr);
@@ -640,12 +643,8 @@ public class Gui extends Application {
             public void handle(ActionEvent e) {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Save File");
-                // fileChooser.setInitialFileName(fName);
                 File file = fileChooser.showSaveDialog(null);
                 try (PrintWriter fOut = new PrintWriter(file)) {
-
-                    // this will run through the array and write the employee tostringEmp to the
-                    // file only if employee getFired is false
                     for (int i = 0; i < employeesArray.size(); i++) {
                         if (employeesArray.retreiveAtIndex(i).getFired() == false) {
                             fOut.println(employeesArray.retreiveAtIndex(i).toStringEmp());
