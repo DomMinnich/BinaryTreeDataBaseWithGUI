@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -31,6 +32,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -42,6 +44,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Gui extends Application {
+
+    // TODO make pane to cover the side panel except for the quit button
 
     // setter and getter for and Employee object
     private Employee employee;
@@ -98,38 +102,47 @@ public class Gui extends Application {
         vb.setBackground(new Background(background));
 
         // checkBoxPane
-        Pane checkBoxPane = new Pane();
-        // blankPane
-        Pane blankPane = new Pane();
-        blankPane.setPrefSize(40, 20);
-        // set background to black
-        BackgroundFill background24 = new BackgroundFill(Color.BLACK, null, null);
-        blankPane.setBackground(new Background(background24));
-        // set opacity to half
-        blankPane.setOpacity(0);
+        // Pane checkBoxPane = new Pane();
+        // // blankPane
+        // Pane blankPane = new Pane();
+        // blankPane.setPrefSize(40, 20);
+        // // set background to black
+        // BackgroundFill background24 = new BackgroundFill(Color.BLACK, null, null);
+        // blankPane.setBackground(new Background(background24));
+        // // set opacity to half
+        // blankPane.setOpacity(0);
 
-        // make a check box
+        // // make a check box
 
-        CheckBox checkBox = new CheckBox("Shortcuts Disabled");
+        // CheckBox checkBox = new CheckBox("Shortcuts Disabled");
 
-        checkBox.setTextFill(Color.YELLOW);
+        // checkBox.setTextFill(Color.YELLOW);
 
-        checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                checkBox.setTextFill(Color.LIGHTGREEN);
+        // checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+        // if (newValue) {
+        // checkBox.setTextFill(Color.LIGHTGREEN);
 
-                checkBox.setText("Shortcuts Enabled");
-            } else {
-                checkBox.setTextFill(Color.YELLOW);
+        // checkBox.setText("Shortcuts Enabled");
+        // } else {
+        // checkBox.setTextFill(Color.YELLOW);
 
-            }
-        });
-        checkBox.setTranslateX(200);
-        checkBoxPane.getChildren().addAll(checkBox, blankPane);
-        vbTop.getChildren().addAll(checkBoxPane);
+        // }
+        // });
+        // checkBox.setTranslateX(200);
+        // checkBoxPane.getChildren().addAll(checkBox, blankPane);
+        // vbTop.getChildren().addAll(checkBoxPane);
 
-        Label ln = new Label("\n\n");
-        vbTop.getChildren().add(ln);
+        // Label ln = new Label("\n\n");
+        // vbTop.getChildren().add(ln);
+
+        // menuBlocker on start
+        StackPane stackP = new StackPane();
+        Pane menuBlocker = new Pane();
+        menuBlocker.setMinSize(140, 530);
+        menuBlocker.setMaxSize(140, 530);
+        menuBlocker.setTranslateX(0);
+        menuBlocker.setTranslateY(-20);
+        menuBlocker.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
 
         // Scrolling Pane
         Pane scrollBarPane = new Pane();
@@ -162,16 +175,18 @@ public class Gui extends Application {
         helpScrollBar.setFitToWidth(true);
         Label commands = new Label();
         commands.setText(
-                "Welcome to the Employee Database! \n\nHere are the Quick Command Shortcuts\n\nTo Enable Quick Commands Press \"ESC\"\n"
+                "Welcome to the Employee Database! \n\n"
                         +
-                        "To Disable Quick Commands Press \"ESC\" Again\n" +
-                        "To Insert an Employee Press \"I\"\n" +
-                        "To Delete an Employee Press \"D\"\n" +
-                        "To Search for an Employee Using Site Press \"S\"\n" +
-                        "To Search for an Employee Using Posistion Press \"P\"\n" +
-                        "To Search for an Employee Using ID Press \"F\"\n" +
-                        "To Save and Exit Press \"E\"\n" +
-                        "To Exit Without Saving Press \"Q\"\n\n\n");
+                        "To Insert An Employee Press Insert Button\n" +
+                        "To Delete An Employee Press Delete Button\n" +
+                        "To Search For an Employee Press Search Button\n" +
+                        "To Display All Employees Press Display All Button\n" +
+                        "To Save And Exit Press Save And Exit Button\n" +
+                        "To Exit Without Saving Press Quit Button\n\n" +
+                        "To Add Another Data File Press Merge Button\n" +
+                        "While In Seach use The Top Right Drop Box For Data\n" +
+                        "Make Sure Searches Are Formated Correctly\n\n" +
+                        "Thank You For Using The Employee Database!\n");
         helpPane.getChildren().add(commands);
         // set pane background to sky blue
         BackgroundFill background2 = new BackgroundFill(Color.LIGHTBLUE, null, null);
@@ -232,8 +247,8 @@ public class Gui extends Application {
         Pane arrow = new Pane();
         arrow.setMinSize(150, 100);
         arrow.setMaxSize(150, 100);
-        arrow.translateXProperty().set(880);
-        arrow.translateYProperty().set(360);
+        arrow.translateXProperty().set(920);
+        arrow.translateYProperty().set(210);
         arrow.setBackground(arrowBg);
 
         Pane arrow2 = new Pane();
@@ -317,15 +332,16 @@ public class Gui extends Application {
                 search.setFont(font2);
                 search.setTextFill(Color.WHITE);
                 search.translateXProperty().set(700);
-                search.translateYProperty().set(330);
+                search.translateYProperty().set(190);
 
-                checkBox.setTranslateX(0);
+                // checkBox.setTranslateX(0);
 
                 // when success label reaches 0 opacity, add the search label
                 timeline3.setOnFinished(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         scrollBarPane.getChildren().addAll(search, arrow);
+                        stackP.getChildren().removeAll(menuBlocker);
                     }
                 });
 
@@ -380,6 +396,23 @@ public class Gui extends Application {
             timeline.play();
         });
 
+        stackP.setOnMouseClicked(e -> {
+            Timeline shake = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(upload.translateXProperty(), 450)),
+                    new KeyFrame(Duration.seconds(0.1), new KeyValue(upload.translateXProperty(), 460)),
+                    new KeyFrame(Duration.seconds(0.2), new KeyValue(upload.translateXProperty(), 450)),
+                    new KeyFrame(Duration.seconds(0.3), new KeyValue(upload.translateXProperty(), 460)),
+                    new KeyFrame(Duration.seconds(0.4), new KeyValue(upload.translateXProperty(), 450)),
+                    new KeyFrame(Duration.seconds(0.5), new KeyValue(upload.translateXProperty(), 460)),
+                    new KeyFrame(Duration.seconds(0.6), new KeyValue(upload.translateXProperty(), 450)),
+                    new KeyFrame(Duration.seconds(0.7), new KeyValue(upload.translateXProperty(), 460)),
+                    new KeyFrame(Duration.seconds(0.8), new KeyValue(upload.translateXProperty(), 450)),
+                    new KeyFrame(Duration.seconds(0.9), new KeyValue(upload.translateXProperty(), 460)),
+                    new KeyFrame(Duration.seconds(1), new KeyValue(upload.translateXProperty(), 450)));
+            st.setText("Don't be silly upload first");
+            shake.play();
+        });
+
         //////////////////// SEARCH ////////////////////
         Button searchBt = new Button("Search");
         searchBt.setFont(font);
@@ -397,6 +430,9 @@ public class Gui extends Application {
                 searchLabel.setTranslateY(240);
                 searchLabel.setTextFill(Color.WHITE);
                 scrollBarPane.getChildren().add(searchLabel);
+
+                // TODO: add other search functions (by name, by site, by position, etc)
+
                 TextField searchField = new TextField();
                 searchField.setPromptText("Enter Employee ID Ex: A-ABCD-01");
                 searchField.setTranslateX(450);
@@ -415,18 +451,6 @@ public class Gui extends Application {
 
                                     Employee emp = employeesArray
                                             .retreiveAtIndex(binaryTree.getRecordNum(searchField.getText()));
-                                    // print the received text
-                                    System.out.println(searchField.getText());
-                                    // print the retrived position -1
-                                    System.out.println(binaryTree.getRecordNum(searchField.getText()));
-                                    System.out.println("emp = " + emp.toStringEmp());
-
-                                    // for loop that prints every employee object in the array
-                                    for (int i = 0; i < employeesArray.size(); i++) {
-                                        System.out.println(employeesArray.retreiveAtIndex(i).toStringEmp());
-                                    }
-
-                                    System.out.println("emp = " + emp.toStringEmp());
                                     if (emp.getFired() == false) {
                                         setEmployee(emp);
                                         scrollBarPane.getChildren().clear();
@@ -586,69 +610,33 @@ public class Gui extends Application {
                 File file = fileChooser.showSaveDialog(null);
                 try (PrintWriter fOut = new PrintWriter(file)) {
 
-                    // TODO save file by printing out the employeesArray tostring (only the ones
-                    // that have set fire to false)
-                    // // int mazeSelected =
-                    // mazeSelectionCBox.getSelectionModel().getSelectedIndex() + 1;
-                    // // setMazeSelected(mazeSelected);
-                    // if (mazeSelected > mazeCount) {
-                    // // pop up error message
-                    // System.out.println("Error Maze Not Imported On Slot Selected");
-                    // Alert a = new Alert(Alert.AlertType.ERROR, "Error Maze Not Imported On Slot
-                    // Selected",
-                    // ButtonType.OK);
-                    // a.showAndWait();
-
-                    // } else {
-                    // // System.out.println("maze selected is: " + mazeSelected);
-                    // Label printFinished = new Label("Printed All The Solved Paths To File!");
-                    // printFinished.setFont(font2);
-                    // printFinished.setTextFill(Color.YELLOW);
-                    // printFinished.setTranslateX(200);
-                    // printFinished.setTranslateY(50);
-                    // scrollBarPane.getChildren().clear();
-                    // scrollBarPane.getChildren().addAll(sl, greyBack, pacManMaze, printFinished);
-                    // for (int i = 0; i < mazeCount; i++) {
-                    // int m = getMazeSelected();
-                    // m = i + 1;
-                    // setMazeSelected(m);
-                    // try (Scanner fileInput = new Scanner(getFile())) {
-                    // maze = new Maze(fileInput);
-                    // maze.setMaze(maze);
-                    // BreadthFirstMazeRunner runner = new BreadthFirstMazeRunner(maze,
-                    // maze.getStart(),
-                    // maze.getFinish());
-                    // boolean b = runner.runMaze();
-                    // fOut.println(maze.getRows());
-                    // fOut.println(maze.getCols());
-                    // if (b == true) {
-                    // fOut.println(maze.toString(runner.pathTaken));
-                    // } else {
-                    // fOut.println(maze.toString());
-                    // }
-                    // } catch (FileNotFoundException e1) {
-                    // e1.printStackTrace();
-                    // }
-                    // }
-                    // }
-                } catch (FileNotFoundException e2) {
-                    e2.printStackTrace();
+                    // this will run through the array and write the employee tostringEmp to the
+                    // file only if employee getFired is false
+                    for (int i = 0; i < employeesArray.size(); i++) {
+                        if (employeesArray.retreiveAtIndex(i).getFired() == false) {
+                            fOut.println(employeesArray.retreiveAtIndex(i).toStringEmp());
+                        }
+                    }
+                    fOut.close();
+                } catch (FileNotFoundException ex) {
+                    System.out.println("File not found");
                 }
-                quitBt.fire();
+                primaryStage.close();
             }
         };
         writeDataBt.setOnAction(write);
 
+        //////////////////// Delete////////////////////
         Button deleteBt = new Button(
-                "Display All");
-                deleteBt.setFont(font);
-                deleteBt.setMaxSize(120, 50);
-                deleteBt.setMinSize(120, 50);
+                "Delete Employee");
+        deleteBt.setFont(font);
+        deleteBt.setMaxSize(120, 50);
+        deleteBt.setMinSize(120, 50);
         EventHandler<ActionEvent> delete = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 // new textinputdialog
-                System.out.println("delte called");
-                TextInputDialog dialog = new TextInputDialog("Enter Employee ID");
+                System.out.println("delete called");
+                TextInputDialog dialog = new TextInputDialog("Ex: A-ABCD-01");
                 dialog.setTitle("Delete Employee");
                 dialog.setHeaderText("Delete Employee");
                 dialog.setContentText("Please enter the employee ID you wish to delete:");
@@ -657,6 +645,28 @@ public class Gui extends Application {
                 if (binaryTree.contains(result)) {
                     employeesArray.retreiveAtIndex(binaryTree.getRecordNum(result)).setFired(true);
                     binaryTree.delete(result);
+                    Label employeeDeleted = new Label("Would Not Want \nTo Be That Employee\n\t:(\nEmployee Fired & Deleted");
+                    employeeDeleted.setFont(font3);
+                    employeeDeleted.setTextFill(Color.LIGHTGREEN);
+                    employeeDeleted.setTranslateX(100);
+                    employeeDeleted.setTranslateY(200);
+                    scrollBarPane.getChildren().clear();
+                    scrollBarPane.getChildren().addAll(sl, blueStart, help, employeeDeleted);
+                   //make a timeline to slowly fade out the label
+                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(4000), employeeDeleted);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.play();
+                    //when the timeline is done remove the label from the pane and call search again
+                    fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            scrollBarPane.getChildren().remove(employeeDeleted);
+                            searchBt.fire();
+                        }
+                    });
+
+
                 } else {
                     // pop up error message
                     System.out.println("Error Employee Not Found");
@@ -668,13 +678,48 @@ public class Gui extends Application {
         };
         deleteBt.setOnAction(delete);
 
+        //////////////////// Insert ////////////////////
+
+        Button insertBt = new Button(
+                "Insert New Employee");
+        insertBt.setFont(font);
+        insertBt.setMaxSize(120, 50);
+        insertBt.setMinSize(120, 50);
+        EventHandler<ActionEvent> insert = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                // TODO add insert functionality
+
+            }
+        };
+        insertBt.setOnAction(insert);
+
+        Button mergeFilesBt = new Button(
+                "Merge Files");
+        mergeFilesBt.setFont(font);
+        mergeFilesBt.setMaxSize(120, 50);
+        mergeFilesBt.setMinSize(120, 50);
+        EventHandler<ActionEvent> merge = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                // TODO add merge functionality
+
+            }
+        };
+        mergeFilesBt.setOnAction(merge);
+
         // Stage Configuration
+
         vbTop.getChildren().addAll(dataBoxTitle, employDataBox);
-        vbTop.setPadding(new Insets(20, 10, 250, 10));
-        vbBottom.getChildren().addAll(searchBt, DisplayAllBt, writeDataBt, quitBt);
-        vbBottom.setPadding(new Insets(0, 10, 0, 10));
+        vbTop.setPadding(new Insets(0, 10, 250, 10));
+        vbBottom.getChildren().addAll(searchBt, DisplayAllBt, deleteBt, insertBt, mergeFilesBt, writeDataBt, quitBt);
+        vbBottom.translateXProperty().set(3);
+        vbBottom.translateYProperty().set(-10);
+        vbTop.translateXProperty().set(3);
+        vbBottom.setPadding(new Insets(-70, 10, 0, 10));
         vb.getChildren().addAll(vbTop, vbBottom);
-        hb.getChildren().addAll(scrollBar, vb);
+
+        stackP.getChildren().addAll(vb, menuBlocker);
+
+        hb.getChildren().addAll(scrollBar, stackP);
         Scene sc = new Scene(
                 hb);
         primaryStage.setScene(sc);
@@ -682,66 +727,6 @@ public class Gui extends Application {
         primaryStage.setMaxWidth(1250);
         primaryStage.setMinHeight(640);
         primaryStage.setMinWidth(1250);
-       
-
-        sc.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ESCAPE) {
-                    // if escape key is pressed then select the checkBox, else deselect it
-                    if (checkBox.isSelected()) {
-                        checkBox.setSelected(false);
-                    } else {
-                        checkBox.setSelected(true);
-                    }
-                }
-            }
-        });
-
-        // if escape key is pressed add label r to scrollBarPane
-
-        checkBox.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (checkBox.isSelected()) {
-                    sc.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                        @Override
-                        public void handle(KeyEvent event) {
-                            if (event.getCode() == KeyCode.F) {
-                                searchBt.fire();
-                            }
-                        }
-                    });
-
-                    // TODO if s is pressed then seach with site
-
-                    // TODO if P is pressed then seach with position
-
-                    // TODO if I is pressed then add employee
-
-                    // TODO if D is pressed then delete employee (prompt for id)
-                    // if d is pressed then called the deleteBt
-                    sc.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                        @Override
-                        public void handle(KeyEvent event) {
-                            if (event.getCode() == KeyCode.D) {
-                                deleteBt.fire();
-                            }
-                        }
-                    });
-
-                    // TODO if M is pressed then call merge method (need to make a merge method)
-
-                    // TODO if E is pressed then call save and exit button
-
-                    // TODO if Q is pressed then call quit button
-
-                } else {
-                    // do nothing
-                }
-            }
-        });
-
         primaryStage.show();
 
     }
