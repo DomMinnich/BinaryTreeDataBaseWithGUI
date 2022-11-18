@@ -1,20 +1,15 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.Scanner;
-
-import javax.swing.plaf.synth.SynthSplitPaneUI;
+import java.util.Optional;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -22,7 +17,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -47,7 +41,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-//TODO Add oh you missed me and move the start upload ;)
 public class Gui extends Application {
 
     // setter and getter for and Employee object
@@ -104,18 +97,16 @@ public class Gui extends Application {
         BackgroundFill background = new BackgroundFill(rgb, null, null);
         vb.setBackground(new Background(background));
 
-
-        //checkBoxPane
+        // checkBoxPane
         Pane checkBoxPane = new Pane();
-        //blankPane
+        // blankPane
         Pane blankPane = new Pane();
-        blankPane.setPrefSize(40,20);
-        //set background to black 
+        blankPane.setPrefSize(40, 20);
+        // set background to black
         BackgroundFill background24 = new BackgroundFill(Color.BLACK, null, null);
         blankPane.setBackground(new Background(background24));
-        //set opacity to half
+        // set opacity to half
         blankPane.setOpacity(0);
-
 
         // make a check box
 
@@ -134,9 +125,8 @@ public class Gui extends Application {
             }
         });
         checkBox.setTranslateX(200);
-        checkBoxPane.getChildren().addAll(checkBox,blankPane);
+        checkBoxPane.getChildren().addAll(checkBox, blankPane);
         vbTop.getChildren().addAll(checkBoxPane);
-        
 
         Label ln = new Label("\n\n");
         vbTop.getChildren().add(ln);
@@ -596,7 +586,8 @@ public class Gui extends Application {
                 File file = fileChooser.showSaveDialog(null);
                 try (PrintWriter fOut = new PrintWriter(file)) {
 
-                    // TODO save file by printing out the employeesArray tostring
+                    // TODO save file by printing out the employeesArray tostring (only the ones
+                    // that have set fire to false)
                     // // int mazeSelected =
                     // mazeSelectionCBox.getSelectionModel().getSelectedIndex() + 1;
                     // // setMazeSelected(mazeSelected);
@@ -648,53 +639,34 @@ public class Gui extends Application {
         };
         writeDataBt.setOnAction(write);
 
-        // if escape key is pressed add label r to scrollBarPane
-        scrollBarPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ESCAPE) {
-                    // if escape key is pressed then select the checkBox, else deselect it
-                    if (checkBox.isSelected()) {
-                        checkBox.setSelected(false);
-                    } else {
-                        checkBox.setSelected(true);
-                    }
-                }
-            }
-        });
-
-        checkBox.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (checkBox.isSelected()) {
-                    scrollBarPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                        @Override
-                        public void handle(KeyEvent event) {
-                            if (event.getCode() == KeyCode.F) {
-                                searchBt.fire();
-                            }
-                        }
-                    });
-
-                    // TODO if s is pressed then seach with site
-
-                    // TODO if P is pressed then seach with position
-
-                    // TODO if I is pressed then add employee
-
-                    // TODO if D is pressed then delete employee (prompt for id)
-
-                    // TODO if M is pressed then call merge method (need to make a merge method)
-
-                    // TODO if E is pressed then call save and exit button
-
-                    // TODO if Q is pressed then call quit button
-
+        Button deleteBt = new Button(
+                "Display All");
+                deleteBt.setFont(font);
+                deleteBt.setMaxSize(120, 50);
+                deleteBt.setMinSize(120, 50);
+        EventHandler<ActionEvent> delete = new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                // new textinputdialog
+                System.out.println("delte called");
+                TextInputDialog dialog = new TextInputDialog("Enter Employee ID");
+                dialog.setTitle("Delete Employee");
+                dialog.setHeaderText("Delete Employee");
+                dialog.setContentText("Please enter the employee ID you wish to delete:");
+                dialog.showAndWait();
+                String result = dialog.getResult();
+                if (binaryTree.contains(result)) {
+                    employeesArray.retreiveAtIndex(binaryTree.getRecordNum(result)).setFired(true);
+                    binaryTree.delete(result);
                 } else {
-                    // do nothing
+                    // pop up error message
+                    System.out.println("Error Employee Not Found");
+                    Alert a = new Alert(Alert.AlertType.ERROR, "Error Employee Not Found",
+                            ButtonType.OK);
+                    a.showAndWait();
                 }
             }
-        });
+        };
+        deleteBt.setOnAction(delete);
 
         // Stage Configuration
         vbTop.getChildren().addAll(dataBoxTitle, employDataBox);
@@ -710,6 +682,67 @@ public class Gui extends Application {
         primaryStage.setMaxWidth(1250);
         primaryStage.setMinHeight(640);
         primaryStage.setMinWidth(1250);
+       
+
+        sc.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ESCAPE) {
+                    // if escape key is pressed then select the checkBox, else deselect it
+                    if (checkBox.isSelected()) {
+                        checkBox.setSelected(false);
+                    } else {
+                        checkBox.setSelected(true);
+                    }
+                }
+            }
+        });
+
+        // if escape key is pressed add label r to scrollBarPane
+
+        checkBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (checkBox.isSelected()) {
+                    sc.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                        @Override
+                        public void handle(KeyEvent event) {
+                            if (event.getCode() == KeyCode.F) {
+                                searchBt.fire();
+                            }
+                        }
+                    });
+
+                    // TODO if s is pressed then seach with site
+
+                    // TODO if P is pressed then seach with position
+
+                    // TODO if I is pressed then add employee
+
+                    // TODO if D is pressed then delete employee (prompt for id)
+                    // if d is pressed then called the deleteBt
+                    sc.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                        @Override
+                        public void handle(KeyEvent event) {
+                            if (event.getCode() == KeyCode.D) {
+                                deleteBt.fire();
+                            }
+                        }
+                    });
+
+                    // TODO if M is pressed then call merge method (need to make a merge method)
+
+                    // TODO if E is pressed then call save and exit button
+
+                    // TODO if Q is pressed then call quit button
+
+                } else {
+                    // do nothing
+                }
+            }
+        });
+
         primaryStage.show();
+
     }
 }
