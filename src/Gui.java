@@ -47,6 +47,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+//TODO Add oh you missed me and move the start upload ;)
 public class Gui extends Application {
 
     // setter and getter for and Employee object
@@ -103,12 +104,42 @@ public class Gui extends Application {
         BackgroundFill background = new BackgroundFill(rgb, null, null);
         vb.setBackground(new Background(background));
 
+
+        //checkBoxPane
+        Pane checkBoxPane = new Pane();
+        //blankPane
+        Pane blankPane = new Pane();
+        blankPane.setPrefSize(40,20);
+        //set background to black 
+        BackgroundFill background24 = new BackgroundFill(Color.BLACK, null, null);
+        blankPane.setBackground(new Background(background24));
+        //set opacity to half
+        blankPane.setOpacity(0);
+
+
         // make a check box
 
-        // TODO acending or decending order
-        CheckBox checkBox = new CheckBox("A");
-        // add the check box to the vb
-        vb.getChildren().add(checkBox);
+        CheckBox checkBox = new CheckBox("Shortcuts Disabled");
+
+        checkBox.setTextFill(Color.YELLOW);
+
+        checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                checkBox.setTextFill(Color.LIGHTGREEN);
+
+                checkBox.setText("Shortcuts Enabled");
+            } else {
+                checkBox.setTextFill(Color.YELLOW);
+
+            }
+        });
+        checkBox.setTranslateX(200);
+        checkBoxPane.getChildren().addAll(checkBox,blankPane);
+        vbTop.getChildren().addAll(checkBoxPane);
+        
+
+        Label ln = new Label("\n\n");
+        vbTop.getChildren().add(ln);
 
         // Scrolling Pane
         Pane scrollBarPane = new Pane();
@@ -121,12 +152,23 @@ public class Gui extends Application {
         help.setTextFill(Color.FIREBRICK);
         help.setMinSize(30, 30);
         help.setMaxSize(30, 30);
-        help.setLayoutX(10);
+        help.setLayoutX(1050);
         help.setLayoutY(10);
+
         Pane helpPane = new Pane();
         ScrollPane helpScrollBar = new ScrollPane(helpPane);
         helpScrollBar.setMaxSize(300, 200);
         helpScrollBar.setMinSize(300, 200);
+        helpScrollBar.setLayoutX(800);
+        helpScrollBar.setLayoutY(0);
+
+        Pane blackBorder = new Pane();
+        blackBorder.setMaxSize(303, 203);
+        blackBorder.setMinSize(303, 203);
+        blackBorder.setStyle("-fx-background-color: black;");
+        blackBorder.setLayoutX(797);
+        blackBorder.setLayoutY(0);
+
         helpScrollBar.setFitToWidth(true);
         Label commands = new Label();
         commands.setText(
@@ -141,14 +183,14 @@ public class Gui extends Application {
                         "To Save and Exit Press \"E\"\n" +
                         "To Exit Without Saving Press \"Q\"\n\n\n");
         helpPane.getChildren().add(commands);
-        //set pane background to sky blue
+        // set pane background to sky blue
         BackgroundFill background2 = new BackgroundFill(Color.LIGHTBLUE, null, null);
         helpPane.setBackground(new Background(background2));
-        //set text color to white
+        // set text color to white
 
         helpScrollBar.setVisible(false);
         help.setOnMouseEntered(e -> {
-            scrollBarPane.getChildren().add(helpScrollBar);
+            scrollBarPane.getChildren().addAll(blackBorder, helpScrollBar);
             helpScrollBar.setVisible(true);
             helpPane.toFront();
 
@@ -157,7 +199,7 @@ public class Gui extends Application {
         // on mouse exit for the helpscrollbar remove the helpPane
         helpScrollBar.setOnMouseExited(e -> {
             helpScrollBar.setVisible(false);
-            scrollBarPane.getChildren().remove(helpScrollBar);
+            scrollBarPane.getChildren().removeAll(blackBorder, helpScrollBar);
         });
 
         // Blue Background
@@ -201,7 +243,7 @@ public class Gui extends Application {
         arrow.setMinSize(150, 100);
         arrow.setMaxSize(150, 100);
         arrow.translateXProperty().set(880);
-        arrow.translateYProperty().set(320);
+        arrow.translateYProperty().set(360);
         arrow.setBackground(arrowBg);
 
         Pane arrow2 = new Pane();
@@ -285,7 +327,9 @@ public class Gui extends Application {
                 search.setFont(font2);
                 search.setTextFill(Color.WHITE);
                 search.translateXProperty().set(700);
-                search.translateYProperty().set(300);
+                search.translateYProperty().set(330);
+
+                checkBox.setTranslateX(0);
 
                 // when success label reaches 0 opacity, add the search label
                 timeline3.setOnFinished(new EventHandler<ActionEvent>() {
@@ -471,35 +515,29 @@ public class Gui extends Application {
 
             int itemSeleted = employDataBox.getSelectionModel().getSelectedIndex();
             switch (itemSeleted) {
-
                 case 0:
                     item.setText("ID");
                     empData.setText("ID: " + getEmployee().getEmployeeID());
                     break;
                 case 1:
                     item.setText("First Name");
-                    // scrollBarPane.getChildren().remove(empData);
                     empData.setText("First Name: " + getEmployee().getFirstName());
                     break;
                 case 2:
                     item.setText("Last Name");
-                    // scrollBarPane.getChildren().remove(empData);
                     empData.setText("Last Name: " + getEmployee().getLastName());
                     break;
                 case 3:
                     item.setText("Position");
-                    // scrollBarPane.getChildren().remove(empData);
                     empData.setText("Position: " + getEmployee().getPosition());
                     break;
                 case 4:
                     item.setText("Site");
-                    // scrollBarPane.getChildren().remove(empData);
                     empData.setText("Site: " + getEmployee().getSite());
                     break;
 
             }
             scrollBarPane.getChildren().clear();
-            // remove arrow2 from vbTop
             vbTop.getChildren().remove(arrow2);
             scrollBarPane.getChildren().addAll(sl, blueStart, help, employeeFound, empData, employeeFound2);
         });
@@ -512,26 +550,18 @@ public class Gui extends Application {
         DisplayAllBt.setMinSize(120, 50);
         EventHandler<ActionEvent> findPathAll = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-
-                // new label that says "Employee DataBase"
                 Label employeeDataBase = new Label("Employee DataBase");
                 employeeDataBase.setFont(font3);
                 employeeDataBase.setTextFill(Color.LIGHTGREEN);
                 employeeDataBase.setTranslateX(10);
                 employeeDataBase.setTranslateY(10);
-
-                // new label saying "Employee ID, First Name, Last Name, Position, Site" with
-                // tabs in between
                 Label chartLabel = new Label("Employee ID\t\tLast Name\t\tFirst Name\t\tPosition\t\tSite");
-                // new font with size 15
                 Font font5 = Font.font("yugothic", FontWeight.BOLD, FontPosture.ITALIC, 15);
                 chartLabel.setFont(font5);
                 chartLabel.setTextFill(Color.LIGHTGREEN);
                 chartLabel.setTranslateX(10);
                 chartLabel.setTranslateY(80);
-                // new label for the employee data list
                 Label empDataList = new Label();
-                // for loop to display all the employees
                 scrollBarPane.getChildren().clear();
                 scrollBarPane.getChildren().addAll(sl, blueStart, help, employeeDataBase, chartLabel);
                 String tempStr = "";
@@ -565,6 +595,8 @@ public class Gui extends Application {
                 // fileChooser.setInitialFileName(fName);
                 File file = fileChooser.showSaveDialog(null);
                 try (PrintWriter fOut = new PrintWriter(file)) {
+
+                    // TODO save file by printing out the employeesArray tostring
                     // // int mazeSelected =
                     // mazeSelectionCBox.getSelectionModel().getSelectedIndex() + 1;
                     // // setMazeSelected(mazeSelected);
@@ -616,11 +648,53 @@ public class Gui extends Application {
         };
         writeDataBt.setOnAction(write);
 
+        // if escape key is pressed add label r to scrollBarPane
+        scrollBarPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ESCAPE) {
+                    // if escape key is pressed then select the checkBox, else deselect it
+                    if (checkBox.isSelected()) {
+                        checkBox.setSelected(false);
+                    } else {
+                        checkBox.setSelected(true);
+                    }
+                }
+            }
+        });
 
+        checkBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (checkBox.isSelected()) {
+                    scrollBarPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                        @Override
+                        public void handle(KeyEvent event) {
+                            if (event.getCode() == KeyCode.F) {
+                                searchBt.fire();
+                            }
+                        }
+                    });
 
-//TODO set each shortcut key to action
+                    // TODO if s is pressed then seach with site
 
+                    // TODO if P is pressed then seach with position
 
+                    // TODO if I is pressed then add employee
+
+                    // TODO if D is pressed then delete employee (prompt for id)
+
+                    // TODO if M is pressed then call merge method (need to make a merge method)
+
+                    // TODO if E is pressed then call save and exit button
+
+                    // TODO if Q is pressed then call quit button
+
+                } else {
+                    // do nothing
+                }
+            }
+        });
 
         // Stage Configuration
         vbTop.getChildren().addAll(dataBoxTitle, employDataBox);
