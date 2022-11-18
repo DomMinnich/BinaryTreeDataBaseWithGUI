@@ -647,14 +647,14 @@ public class Gui extends Application {
                 try (PrintWriter fOut = new PrintWriter(file)) {
                     for (int i = 0; i < employeesArray.size(); i++) {
                         if (employeesArray.retreiveAtIndex(i).getFired() == false) {
-                            fOut.println(employeesArray.retreiveAtIndex(i).toStringEmp());
+                            fOut.println(employeesArray.retreiveAtIndex(i).toPrinter());
                         }
                     }
                     fOut.close();
                 } catch (FileNotFoundException ex) {
                     System.out.println("File not found");
                 }
-                primaryStage.close();
+               primaryStage.close();
             }
         };
         writeDataBt.setOnAction(write);

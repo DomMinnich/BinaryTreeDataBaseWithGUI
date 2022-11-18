@@ -74,6 +74,11 @@ public class Employee {
         return EmployeeID + "\t\t" + FirstName + "\t\t" + LastName + "\t\t" + Position + "\t\t" + Site+"\n";
     }
 
+    public String toPrinter(){
+        //return last name then first name then posistion then site
+        return LastName + "\t" + FirstName + "\t" + Position + "\t" + Site+"\n";
+    }
+
 
     public boolean equals(Employee other) {
         return this.EmployeeID.equals(other.EmployeeID);
