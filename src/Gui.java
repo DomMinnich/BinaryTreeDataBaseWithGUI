@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Optional;
+import java.util.Scanner;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -958,27 +959,15 @@ public class Gui extends Application {
                 newSite.setContentText("Please enter the employee's site:");
                 newSite.showAndWait();
                 String site = newSite.getResult();
-
-                // String newID contains the capital first letter of the site, then a dash, then
-                // the capital first three letters of the capital last name then the first
-                // letter of the first name, then a dash, then 01
                 String newID = site.substring(0, 1).toUpperCase() + "-" + lastName.substring(0, 3).toUpperCase()
                         + firstName.substring(0, 1).toUpperCase() + "-01";
-                // make a new employee
                 Employee newEmployee = new Employee(newID, firstName, lastName, position, site, false);
-                // make id for new employee
                 System.out.println("newID: " + newEmployee.getEmployeeID());
                 employeesArray.add(newEmployee);
-                // add the employee to the binary tree
                 binaryTree.insert(newID);
-
                 // TODO complete the new employee initiation and insertion
                 scrollBarPane.getChildren().clear();
-                // add back sl, blueStart, help
-                scrollBarPane.getChildren().addAll(sl, blueStart, help);  //40 & 70
-
-                // make and array of labels spelling the word "Running Background Check"
-                //each label should spaced by 40 pixels apart
+                scrollBarPane.getChildren().addAll(sl, blueStart, help);
 
                 Label r = new Label("R");
                 r.setFont(font3);
@@ -1098,8 +1087,6 @@ public class Gui extends Application {
 
                 scrollBarPane.getChildren().addAll(r, u, n, n2, i, n3, g, b, a, c, k, g2, r2, o, u2, n4, d, c2, h, e1,
                         c3, k2, s);
-
-                // make a timeline to change the color of each letter to light green and it should only take .3 seconds to change each letter
                 Timeline charColor = new Timeline();
                 charColor.getKeyFrames().addAll(
                         new KeyFrame(Duration.seconds(0.3), new KeyValue(r.textFillProperty(), Color.LIGHTGREEN)),
@@ -1124,16 +1111,14 @@ public class Gui extends Application {
                         new KeyFrame(Duration.seconds(6.0), new KeyValue(e1.textFillProperty(), Color.LIGHTGREEN)),
                         new KeyFrame(Duration.seconds(6.3), new KeyValue(c3.textFillProperty(), Color.LIGHTGREEN)),
                         new KeyFrame(Duration.seconds(6.6), new KeyValue(k2.textFillProperty(), Color.LIGHTGREEN)),
-                        new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textFillProperty(), Color.LIGHTGREEN))
-                );
+                        new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textFillProperty(), Color.LIGHTGREEN)));
                 charColor.play();
                 Timeline checkMark = new Timeline();
                 checkMark.getKeyFrames().addAll(
                         new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textFillProperty(), Color.LIGHTGREEN)),
-                        new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textProperty(), "\uD83D\uDC4C"))
-                );
+                        new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textProperty(), "\uD83D\uDC4C")));
                 checkMark.play();
-                //TODO employee successfully hired and added to the company
+                // TODO employee successfully hired and added to the company
             }
         };
         insertBt.setOnAction(insert);
@@ -1145,8 +1130,27 @@ public class Gui extends Application {
         mergeFilesBt.setMinSize(120, 50);
         EventHandler<ActionEvent> merge = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                // TODO add merge functionality
-
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Open Resource File");
+                File file = fileChooser.showOpenDialog(primaryStage);
+                Scanner scanner = null;
+                try {
+                    scanner = new Scanner(file);
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    String[] employeeInfo = line.split(" ");
+                    String FirstName = employeeInfo[0];
+                    String LastName = employeeInfo[1];
+                    String Position = employeeInfo[2];
+                    String Site = employeeInfo[3];
+                    String EmployeeID = Site.substring(0, 1) + "-" + FirstName.substring(0, 3).toUpperCase()
+                            + LastName.substring(0, 1).toUpperCase() + "-" + "01";
+                    Employee employee = new Employee(EmployeeID, FirstName, LastName, Position, Site, false);
+                    employeesArray.add(employee);
+                }
             }
         };
         mergeFilesBt.setOnAction(merge);
