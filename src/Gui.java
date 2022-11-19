@@ -975,11 +975,10 @@ public class Gui extends Application {
                 // TODO complete the new employee initiation and insertion
                 scrollBarPane.getChildren().clear();
                 // add back sl, blueStart, help
-                scrollBarPane.getChildren().addAll(sl, blueStart, help);
+                scrollBarPane.getChildren().addAll(sl, blueStart, help);  //40 & 70
 
                 // make and array of labels spelling the word "Running Background Check"
-                // Add each label to the scrollBarPane in red
-                // make a timline to readd each letter to light green
+                //each label should spaced by 40 pixels apart
 
                 Label r = new Label("R");
                 r.setFont(font3);
@@ -989,167 +988,152 @@ public class Gui extends Application {
                 Label u = new Label("U");
                 u.setFont(font3);
                 u.setTextFill(Color.RED);
-                u.setTranslateX(30);
+                u.setTranslateX(40);
                 u.setTranslateY(200);
                 Label n = new Label("N");
                 n.setFont(font3);
                 n.setTextFill(Color.RED);
-                n.setTranslateX(50);
+                n.setTranslateX(80);
                 n.setTranslateY(200);
                 Label n2 = new Label("N");
                 n2.setFont(font3);
                 n2.setTextFill(Color.RED);
-                n2.setTranslateX(70);
+                n2.setTranslateX(120);
                 n2.setTranslateY(200);
                 Label i = new Label("I");
                 i.setFont(font3);
                 i.setTextFill(Color.RED);
-                i.setTranslateX(90);
+                i.setTranslateX(160);
                 i.setTranslateY(200);
                 Label n3 = new Label("N");
                 n3.setFont(font3);
                 n3.setTextFill(Color.RED);
-                n3.setTranslateX(110);
+                n3.setTranslateX(200);
                 n3.setTranslateY(200);
                 Label g = new Label("G");
                 g.setFont(font3);
                 g.setTextFill(Color.RED);
-                g.setTranslateX(130);
+                g.setTranslateX(240);
                 g.setTranslateY(200);
                 Label b = new Label("B");
                 b.setFont(font3);
                 b.setTextFill(Color.RED);
-                b.setTranslateX(160);
+                b.setTranslateX(310);
                 b.setTranslateY(200);
                 Label a = new Label("A");
                 a.setFont(font3);
                 a.setTextFill(Color.RED);
-                a.setTranslateX(180);
+                a.setTranslateX(350);
                 a.setTranslateY(200);
                 Label c = new Label("C");
                 c.setFont(font3);
                 c.setTextFill(Color.RED);
-                c.setTranslateX(200);
+                c.setTranslateX(390);
                 c.setTranslateY(200);
                 Label k = new Label("K");
                 k.setFont(font3);
                 k.setTextFill(Color.RED);
-                k.setTranslateX(220);
+                k.setTranslateX(430);
                 k.setTranslateY(200);
                 Label g2 = new Label("G");
                 g2.setFont(font3);
                 g2.setTextFill(Color.RED);
-                g2.setTranslateX(240);
+                g2.setTranslateX(470);
                 g2.setTranslateY(200);
                 Label r2 = new Label("R");
                 r2.setFont(font3);
                 r2.setTextFill(Color.RED);
-                r2.setTranslateX(260);
+                r2.setTranslateX(510);
                 r2.setTranslateY(200);
                 Label o = new Label("O");
                 o.setFont(font3);
                 o.setTextFill(Color.RED);
-                o.setTranslateX(280);
+                o.setTranslateX(550);
                 o.setTranslateY(200);
                 Label u2 = new Label("U");
                 u2.setFont(font3);
                 u2.setTextFill(Color.RED);
-                u2.setTranslateX(300);
+                u2.setTranslateX(590);
                 u2.setTranslateY(200);
                 Label n4 = new Label("N");
                 n4.setFont(font3);
                 n4.setTextFill(Color.RED);
-                n4.setTranslateX(320);
+                n4.setTranslateX(630);
                 n4.setTranslateY(200);
                 Label d = new Label("D");
                 d.setFont(font3);
                 d.setTextFill(Color.RED);
-                d.setTranslateX(340);
+                d.setTranslateX(670);
                 d.setTranslateY(200);
                 Label c2 = new Label("C");
                 c2.setFont(font3);
                 c2.setTextFill(Color.RED);
-                c2.setTranslateX(370);
+                c2.setTranslateX(740);
                 c2.setTranslateY(200);
                 Label h = new Label("H");
                 h.setFont(font3);
                 h.setTextFill(Color.RED);
-                h.setTranslateX(390);
+                h.setTranslateX(780);
                 h.setTranslateY(200);
                 Label e1 = new Label("E");
                 e1.setFont(font3);
                 e1.setTextFill(Color.RED);
-                e1.setTranslateX(410);
+                e1.setTranslateX(820);
                 e1.setTranslateY(200);
                 Label c3 = new Label("C");
                 c3.setFont(font3);
                 c3.setTextFill(Color.RED);
-                c3.setTranslateX(430);
+                c3.setTranslateX(860);
                 c3.setTranslateY(200);
                 Label k2 = new Label("K");
                 k2.setFont(font3);
                 k2.setTextFill(Color.RED);
-                k2.setTranslateX(450);
+                k2.setTranslateX(900);
                 k2.setTranslateY(200);
                 Label s = new Label("S");
                 s.setFont(font3);
                 s.setTextFill(Color.RED);
-                s.setTranslateX(470);
+                s.setTranslateX(940);
                 s.setTranslateY(200);
 
                 scrollBarPane.getChildren().addAll(r, u, n, n2, i, n3, g, b, a, c, k, g2, r2, o, u2, n4, d, c2, h, e1,
                         c3, k2, s);
 
-                // make a timeline to change the color of each letter to light green
+                // make a timeline to change the color of each letter to light green and it should only take .3 seconds to change each letter
                 Timeline charColor = new Timeline();
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(1), new KeyValue(r.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(2), new KeyValue(u.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(3), new KeyValue(n.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(4), new KeyValue(n2.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(5), new KeyValue(i.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(6), new KeyValue(n3.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(7), new KeyValue(g.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(8), new KeyValue(b.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(9), new KeyValue(a.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(10), new KeyValue(c.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(11), new KeyValue(k.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(12), new KeyValue(g2.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(13), new KeyValue(r2.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(14), new KeyValue(o.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(15), new KeyValue(u2.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(16), new KeyValue(n4.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(17), new KeyValue(d.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(18), new KeyValue(c2.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(19), new KeyValue(h.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(20), new KeyValue(e1.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(21), new KeyValue(c3.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(22), new KeyValue(k2.textFillProperty(), Color.LIGHTGREEN)));
-                charColor.getKeyFrames()
-                        .add(new KeyFrame(Duration.seconds(23), new KeyValue(s.textFillProperty(), Color.LIGHTGREEN)));
+                charColor.getKeyFrames().addAll(
+                        new KeyFrame(Duration.seconds(0.3), new KeyValue(r.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(0.6), new KeyValue(u.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(0.9), new KeyValue(n.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(1.2), new KeyValue(n2.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(1.5), new KeyValue(i.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(1.8), new KeyValue(n3.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(2.1), new KeyValue(g.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(2.4), new KeyValue(b.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(2.7), new KeyValue(a.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(3.0), new KeyValue(c.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(3.3), new KeyValue(k.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(3.6), new KeyValue(g2.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(3.9), new KeyValue(r2.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(4.2), new KeyValue(o.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(4.5), new KeyValue(u2.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(4.8), new KeyValue(n4.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(5.1), new KeyValue(d.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(5.4), new KeyValue(c2.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(5.7), new KeyValue(h.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(6.0), new KeyValue(e1.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(6.3), new KeyValue(c3.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(6.6), new KeyValue(k2.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textFillProperty(), Color.LIGHTGREEN))
+                );
                 charColor.play();
-
+                Timeline checkMark = new Timeline();
+                checkMark.getKeyFrames().addAll(
+                        new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textFillProperty(), Color.LIGHTGREEN)),
+                        new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textProperty(), "\uD83D\uDC4C"))
+                );
+                checkMark.play();
+                //TODO employee successfully hired and added to the company
             }
         };
         insertBt.setOnAction(insert);
