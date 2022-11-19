@@ -452,12 +452,6 @@ public class Gui extends Application {
                 searchLabel.setTextFill(Color.WHITE);
                 scrollBarPane.getChildren().add(searchLabel);
 
-
-
-//! ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
                 // new text field for search by position
                 TextField searchField2 = new TextField();
                 searchField2.setPromptText("Enter Position Ex: Sales");
@@ -476,7 +470,6 @@ public class Gui extends Application {
                                 String lastNameSearch2 = "";
                                 String positionSearch2 = "";
                                 String siteSearch2 = "";
-//TODO turn off combobox for this search
                                 for (int i = 0; i < employeesArray.size(); i++) {
                                     if (employeesArray.retreiveAtIndex(i).getPosition().equals(searchField2.getText())&& employeesArray.retreiveAtIndex(i).getFired() == false) {
 
@@ -492,72 +485,74 @@ public class Gui extends Application {
                                 idLabel2.setTranslateX(10);
                                 idLabel2.setTranslateY(100);
                                 idLabel2.setTextFill(Color.YELLOW);
-                                scrollBarPane.getChildren().add(idLabel2);
+                              //  scrollBarPane.getChildren().add(idLabel2);
                                 Label firstNameLabel2 = new Label("First Name:");
                                 firstNameLabel2.setFont(font5);
                                 firstNameLabel2.setTranslateX(150);
                                 firstNameLabel2.setTranslateY(100);
                                 firstNameLabel2.setTextFill(Color.YELLOW);
-                                scrollBarPane.getChildren().add(firstNameLabel2);
+                              //  scrollBarPane.getChildren().add(firstNameLabel2);
                                 Label lastNameLabel2 = new Label("Last Name:");
                                 lastNameLabel2.setFont(font5);
                                 lastNameLabel2.setTranslateX(300);
                                 lastNameLabel2.setTranslateY(100);
                                 lastNameLabel2.setTextFill(Color.YELLOW);
-                                scrollBarPane.getChildren().add(lastNameLabel2);
+                              //  scrollBarPane.getChildren().add(lastNameLabel2);
                                 Label positionLabel2 = new Label("Position:");
                                 positionLabel2.setFont(font5);
                                 positionLabel2.setTranslateX(450);
                                 positionLabel2.setTranslateY(100);
                                 positionLabel2.setTextFill(Color.YELLOW);
-                                scrollBarPane.getChildren().add(positionLabel2);
+                              //  scrollBarPane.getChildren().add(positionLabel2);
                                 Label siteLabel2 = new Label("Site:");
                                 siteLabel2.setFont(font5);
                                 siteLabel2.setTranslateX(600);
                                 siteLabel2.setTranslateY(100);
                                 siteLabel2.setTextFill(Color.YELLOW);
-                                scrollBarPane.getChildren().add(siteLabel2);
+                              //  scrollBarPane.getChildren().add(siteLabel2);
                                 Label idLabelData2 = new Label(idSearch2);
                                 idLabelData2.setFont(font5);
                                 idLabelData2.setTranslateX(10);
                                 idLabelData2.setTranslateY(150);
                                 idLabelData2.setTextFill(Color.WHITE);
-                                scrollBarPane.getChildren().add(idLabelData2);
+                               // scrollBarPane.getChildren().add(idLabelData2);
                                 Label firstNameLabelData2 = new Label(firstNameSearch2);
                                 firstNameLabelData2.setFont(font5);
                                 firstNameLabelData2.setTranslateX(150);
                                 firstNameLabelData2.setTranslateY(150);
                                 firstNameLabelData2.setTextFill(Color.WHITE);
-                                scrollBarPane.getChildren().add(firstNameLabelData2);
+                               // scrollBarPane.getChildren().add(firstNameLabelData2);
                                 Label lastNameLabelData2 = new Label(lastNameSearch2);
                                 lastNameLabelData2.setFont(font5);
                                 lastNameLabelData2.setTranslateX(300);
                                 lastNameLabelData2.setTranslateY(150);
                                 lastNameLabelData2.setTextFill(Color.WHITE);
-                                scrollBarPane.getChildren().add(lastNameLabelData2);
+                               // scrollBarPane.getChildren().add(lastNameLabelData2);
                                 Label positionLabelData2 = new Label(positionSearch2);
                                 positionLabelData2.setFont(font5);
                                 positionLabelData2.setTranslateX(450);
                                 positionLabelData2.setTranslateY(150);
                                 positionLabelData2.setTextFill(Color.WHITE);
-                                scrollBarPane.getChildren().add(positionLabelData2);
+                               // scrollBarPane.getChildren().add(positionLabelData2);
                                 Label siteLabelData2 = new Label(siteSearch2);
                                 siteLabelData2.setFont(font5);
                                 siteLabelData2.setTranslateX(600);
                                 siteLabelData2.setTranslateY(150);
                                 siteLabelData2.setTextFill(Color.WHITE);
-                                scrollBarPane.getChildren().add(siteLabelData2);
+                               // scrollBarPane.getChildren().add(siteLabelData2);
                                 
                                 employeeFound.setText(searchField2.getText() + " Personnel");
                                 employDataBox.setDisable(true);
+                                scrollBarPane.getChildren().clear();
+                                scrollBarPane.getChildren().addAll(sl, blueStart, help, idLabel2, firstNameLabel2, lastNameLabel2, positionLabel2, siteLabel2, idLabelData2, firstNameLabelData2, lastNameLabelData2, positionLabelData2, siteLabelData2);
                                
                         
                                 if (idSearch2 == "") {
+                                    searchBt.fire();
                                     Alert a = new Alert(Alert.AlertType.ERROR,
                                             "Invalid Position or Search Format", ButtonType.OK);
                                     a.showAndWait();
-                                    // clear the text field
-                                    searchField2.clear();
+                                   
                                 } else {
                                     employeeFound.setFont(font3);
                                     employeeFound.setTextFill(Color.LIGHTGREEN);
@@ -574,10 +569,6 @@ public class Gui extends Application {
                         }
                     }
                 });
-
-
-
-//! ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 // new text field for search by site
                 TextField searchField3 = new TextField();
@@ -592,26 +583,94 @@ public class Gui extends Application {
                     public void handle(KeyEvent event) {
                         if (event.getCode() == KeyCode.ENTER) {
                             if (!searchField3.getText().isEmpty()) {
-                                String site = "";
+                                String idSearch3 = "";
+                                String firstNameSearch3 = "";
+                                String lastNameSearch3 = "";
+                                String positionSearch3 = "";
+                                String siteSearch3 = "";
                                 for (int i = 0; i < employeesArray.size(); i++) {
-                                    if (employeesArray.retreiveAtIndex(i).getSite()
-                                            .equals(searchField3.getText())&& employeesArray.retreiveAtIndex(i).getFired() == false) {
-                                        pulse.play();
-                                        setEmployee(employeesArray.retreiveAtIndex(i));
-                                        scrollBarPane.getChildren().clear();
-                                        scrollBarPane.getChildren().addAll(sl, blueStart, help);
-                                        site += employeesArray.retreiveAtIndex(i).getFirstName() + " "
-                                                + employeesArray.retreiveAtIndex(i).getLastName() + "\n";
-                                    }
+                                    if (employeesArray.retreiveAtIndex(i).getSite().equals(searchField3.getText())&& employeesArray.retreiveAtIndex(i).getFired() == false) {
 
+                                        idSearch3 += employeesArray.retreiveAtIndex(i).getEmployeeID()+"\n";
+                                        firstNameSearch3 += employeesArray.retreiveAtIndex(i).getFirstName()+"\n";
+                                        lastNameSearch3 += employeesArray.retreiveAtIndex(i).getLastName()+"\n";
+                                        positionSearch3 += employeesArray.retreiveAtIndex(i).getPosition()+"\n";
+                                        siteSearch3 += employeesArray.retreiveAtIndex(i).getSite()+"\n";
+                                    }
                                 }
-                                employeeFound.setText(site);
-                                if (site == "") {
+                                Label idLabel3 = new Label("ID:");
+                                idLabel3.setFont(font5);
+                                idLabel3.setTranslateX(10);
+                                idLabel3.setTranslateY(100);
+                                idLabel3.setTextFill(Color.YELLOW);
+                              //  scrollBarPane.getChildren().add(idLabel2);
+                                Label firstNameLabel3 = new Label("First Name:");
+                                firstNameLabel3.setFont(font5);
+                                firstNameLabel3.setTranslateX(150);
+                                firstNameLabel3.setTranslateY(100);
+                                firstNameLabel3.setTextFill(Color.YELLOW);
+                              //  scrollBarPane.getChildren().add(firstNameLabel2);
+                                Label lastNameLabel3 = new Label("Last Name:");
+                                lastNameLabel3.setFont(font5);
+                                lastNameLabel3.setTranslateX(300);
+                                lastNameLabel3.setTranslateY(100);
+                                lastNameLabel3.setTextFill(Color.YELLOW);
+                              //  scrollBarPane.getChildren().add(lastNameLabel2);
+                                Label positionLabel3 = new Label("Position:");
+                                positionLabel3.setFont(font5);
+                                positionLabel3.setTranslateX(450);
+                                positionLabel3.setTranslateY(100);
+                                positionLabel3.setTextFill(Color.YELLOW);
+                              //  scrollBarPane.getChildren().add(positionLabel2);
+                                Label siteLabel3 = new Label("Site:");
+                                siteLabel3.setFont(font5);
+                                siteLabel3.setTranslateX(600);
+                                siteLabel3.setTranslateY(100);
+                                siteLabel3.setTextFill(Color.YELLOW);
+                              //  scrollBarPane.getChildren().add(siteLabel2);
+                                Label idLabelData3 = new Label(idSearch3);
+                                idLabelData3.setFont(font5);
+                                idLabelData3.setTranslateX(10);
+                                idLabelData3.setTranslateY(150);
+                                idLabelData3.setTextFill(Color.WHITE);
+                               // scrollBarPane.getChildren().add(idLabelData2);
+                                Label firstNameLabelData2 = new Label(firstNameSearch3);
+                                firstNameLabelData2.setFont(font5);
+                                firstNameLabelData2.setTranslateX(150);
+                                firstNameLabelData2.setTranslateY(150);
+                                firstNameLabelData2.setTextFill(Color.WHITE);
+                               // scrollBarPane.getChildren().add(firstNameLabelData2);
+                                Label lastNameLabelData2 = new Label(lastNameSearch3);
+                                lastNameLabelData2.setFont(font5);
+                                lastNameLabelData2.setTranslateX(300);
+                                lastNameLabelData2.setTranslateY(150);
+                                lastNameLabelData2.setTextFill(Color.WHITE);
+                               // scrollBarPane.getChildren().add(lastNameLabelData2);
+                                Label positionLabelData3 = new Label(positionSearch3);
+                                positionLabelData3.setFont(font5);
+                                positionLabelData3.setTranslateX(450);
+                                positionLabelData3.setTranslateY(150);
+                                positionLabelData3.setTextFill(Color.WHITE);
+                               // scrollBarPane.getChildren().add(positionLabelData2);
+                                Label siteLabelData3 = new Label(siteSearch3);
+                                siteLabelData3.setFont(font5);
+                                siteLabelData3.setTranslateX(600);
+                                siteLabelData3.setTranslateY(150);
+                                siteLabelData3.setTextFill(Color.WHITE);
+                               // scrollBarPane.getChildren().add(siteLabelData2);
+                                
+                                employeeFound.setText(searchField3.getText() + " Personnel");
+                                employDataBox.setDisable(true);
+                                scrollBarPane.getChildren().clear();
+                                scrollBarPane.getChildren().addAll(sl, blueStart, help, idLabel3, firstNameLabel3, lastNameLabel3, positionLabel3, siteLabel3, idLabelData3, firstNameLabelData2, lastNameLabelData2, positionLabelData3, siteLabelData3);
+                               
+                        
+                                if (idSearch3 == "") {
+                                    searchBt.fire();
                                     Alert a = new Alert(Alert.AlertType.ERROR,
-                                            "Invalid Site or Search Format", ButtonType.OK);
+                                            "Invalid Position or Search Format", ButtonType.OK);
                                     a.showAndWait();
-                                    // clear the text field
-                                    searchField3.clear();
+                                    
                                 } else {
                                     employeeFound.setFont(font3);
                                     employeeFound.setTextFill(Color.LIGHTGREEN);
@@ -628,6 +687,8 @@ public class Gui extends Application {
                         }
                     }
                 });
+
+               
 
 
                 // TODO: add other search functions (by name, by site, by position, etc)
@@ -643,6 +704,7 @@ public class Gui extends Application {
                 searchField.setOnKeyPressed(new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent event) {
+                        employDataBox.setDisable(false);
                         if (event.getCode() == KeyCode.ENTER) {
                             if (!searchField.getText().isEmpty()
                                     && searchField.getText().matches("[A-Z]{1}-[A-Z]{4}-[0-9]{2}")) {
