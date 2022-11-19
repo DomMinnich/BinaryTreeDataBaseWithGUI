@@ -855,7 +855,7 @@ public class Gui extends Application {
         };
         DisplayAllBt.setOnAction(findPathAll);
 
-        //////////////////// Write Mazes ////////////////////
+        //////////////////// Write ////////////////////
         Button writeDataBt = new Button(
                 "Save and Exit");
         writeDataBt.setFont(font);
@@ -1293,10 +1293,12 @@ public class Gui extends Application {
                     String LastName = employeeInfo[1];
                     String Position = employeeInfo[2];
                     String Site = employeeInfo[3];
-                    String EmployeeID = Site.substring(0, 1) + "-" + FirstName.substring(0, 3).toUpperCase()
+                    String employeeID = Site.substring(0, 1) + "-" + FirstName.substring(0, 3).toUpperCase()
                             + LastName.substring(0, 1).toUpperCase() + "-" + "01";
-                    Employee employee = new Employee(EmployeeID, FirstName, LastName, Position, Site, false);
+                    Employee employee = new Employee(employeeID, FirstName, LastName, Position, Site, false);
                     employeesArray.add(employee);
+                    //inset employee into the binary search tree
+                    binaryTree.insert(employeeID);
                 }
             }
         };
