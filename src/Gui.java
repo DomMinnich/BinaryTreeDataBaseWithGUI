@@ -44,6 +44,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+//TODO Still need to make occurance numbers work (-01) start withing the fileIO class then look at insert method
+
 public class Gui extends Application {
     private Employee employee;
 
@@ -914,7 +916,6 @@ public class Gui extends Application {
                             searchBt.fire();
                         }
                     });
-
                 } else {
                     Alert a = new Alert(Alert.AlertType.ERROR, "Error Employee Not Found",
                             ButtonType.OK);
@@ -932,7 +933,73 @@ public class Gui extends Application {
         insertBt.setMinSize(120, 50);
         EventHandler<ActionEvent> insert = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                // TODO add insert functionality
+                // make a textinputdialog for each field
+                TextInputDialog newFirstName = new TextInputDialog("Ex: John");
+                newFirstName.setTitle("Insert New Employee");
+                newFirstName.setHeaderText("Insert New Employee");
+                newFirstName.setContentText("Please enter the employee's first name:");
+                newFirstName.showAndWait();
+                String firstName = newFirstName.getResult();
+                TextInputDialog newLastName = new TextInputDialog("Ex: Doe");
+                newLastName.setTitle("Insert New Employee");
+                newLastName.setHeaderText("Insert New Employee");
+                newLastName.setContentText("Please enter the employee's last name:");
+                newLastName.showAndWait();
+                String lastName = newLastName.getResult();
+                TextInputDialog newPosition = new TextInputDialog("Ex: Sales");
+                newPosition.setTitle("Insert New Employee");
+                newPosition.setHeaderText("Insert New Employee");
+                newPosition.setContentText("Please enter the employee's position:");
+                newPosition.showAndWait();
+                String position = newPosition.getResult();
+                TextInputDialog newSite = new TextInputDialog("Ex: Chicago");
+                newSite.setTitle("Insert New Employee");
+                newSite.setHeaderText("Insert New Employee");
+                newSite.setContentText("Please enter the employee's site:");
+                newSite.showAndWait();
+                String site = newSite.getResult();
+
+                // String newID contains the capital first letter of the site, then a dash, then the capital first three letters of the capital last name then the first letter of the first name, then a dash, then 01
+                String newID = site.substring(0, 1).toUpperCase() + "-" + lastName.substring(0, 3).toUpperCase() + firstName.substring(0, 1).toUpperCase() + "-01";
+                // make a new employee
+                Employee newEmployee = new Employee(newID, firstName, lastName, position, site, false);
+                // make id for new employee
+                System.out.println("newID: " + newEmployee.getEmployeeID());
+                employeesArray.add(newEmployee);
+                // add the employee to the binary tree
+                binaryTree.insert(newID);
+
+        //TODO complete the new employee initiation and insertion
+                scrollBarPane.getChildren().clear();
+                //add back sl, blueStart, help
+                scrollBarPane.getChildren().addAll(sl, blueStart, help);
+                //make label saying Running Background Check
+                Label runningBackgroundCheck = new Label(
+                        "Running Background Check");
+                        scrollBarPane.getChildren().add(runningBackgroundCheck);
+                        //center it
+
+                runningBackgroundCheck.setFont(font3);
+                runningBackgroundCheck.setTextFill(Color.LIGHTGREEN);
+                runningBackgroundCheck.setTranslateX(100);
+                runningBackgroundCheck.setTranslateY(200);
+                scrollBarPane.getChildren().add(runningBackgroundCheck);
+                //make timeline to turn each letter green from left to right
+                Timeline letterColorChange = new Timeline();
+                letterColorChange.setCycleCount(1);
+                letterColorChange.setAutoReverse(false);
+                //make a keyframe for each letter
+                for (int i = 0; i < runningBackgroundCheck.getText().length(); i++) {
+                    int finalI = i;
+                    letterColorChange.getKeyFrames().add(new KeyFrame(Duration.millis(500 * i), new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            runningBackgroundCheck.setTextFill(Color.LIGHTGREEN);
+                            runningBackgroundCheck.setText(runningBackgroundCheck.getText().substring(0, finalI) + runningBackgroundCheck.getText().substring(finalI, finalI + 1).toUpperCase() + runningBackgroundCheck.getText().substring(finalI + 1));
+                        }
+                    }));
+                }
+                letterColorChange.play();
 
             }
         };
