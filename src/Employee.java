@@ -6,8 +6,6 @@ public class Employee {
     String Site; // Site
     Boolean fired = false; // Not Fired By Default
 
- 
-
     public Employee(String EmployeeID, String FirstName, String LastName, String Position, String Site, Boolean fired) {
         this.EmployeeID = EmployeeID;
         this.FirstName = FirstName;
@@ -68,6 +66,10 @@ public class Employee {
 
     public String toStringEmp() {
         return EmployeeID + "\t\t" + FirstName + "\t\t" + LastName + "\t\t" + Position + "\t\t" + Site+"\n";
+    }
+
+public String toStringFL(){
+        return FirstName + "\t" + LastName + "\t" + Position + "\t" + Site+"\n";
     }
 
     public String toPrinter(){

@@ -78,7 +78,6 @@ public class SetArr<E> {           //Array that holds the emplyee data
         return null;
     }
 
-    //retreive the item at the index
     public E retreiveAtIndex(int index) {
         return set[index];
     }

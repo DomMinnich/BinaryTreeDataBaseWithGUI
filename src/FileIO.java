@@ -8,11 +8,8 @@ public class FileIO {
     File fileName;
 
     public SetArr<Employee> readInFile() {
-        SetArr<Employee> employeesArray = new SetArr<Employee>(); 
+        SetArr<Employee> employeesArray = new SetArr<Employee>();
         try {
-
-            // try putting filechooser withing the try block
-
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Resource File");
             File file = fileChooser.showOpenDialog(null);
@@ -43,14 +40,12 @@ public class FileIO {
     }
 
     // set file method
-
     public void setFile(File fileName) {
         System.out.println("setFile was called");
         this.fileName = fileName;
     }
 
     // get file method
-
     public File getFile() {
         System.out.println("getFile was called");
         return fileName;
