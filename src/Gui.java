@@ -965,7 +965,6 @@ public class Gui extends Application {
                 System.out.println("newID: " + newEmployee.getEmployeeID());
                 employeesArray.add(newEmployee);
                 binaryTree.insert(newID);
-                // TODO complete the new employee initiation and insertion
                 scrollBarPane.getChildren().clear();
                 scrollBarPane.getChildren().addAll(sl, blueStart, help);
 
@@ -1084,7 +1083,6 @@ public class Gui extends Application {
                 s.setTextFill(Color.RED);
                 s.setTranslateX(940);
                 s.setTranslateY(200);
-
                 scrollBarPane.getChildren().addAll(r, u, n, n2, i, n3, g, b, a, c, k, g2, r2, o, u2, n4, d, c2, h, e1,
                         c3, k2, s);
                 Timeline charColor = new Timeline();
@@ -1113,16 +1111,23 @@ public class Gui extends Application {
                         new KeyFrame(Duration.seconds(6.6), new KeyValue(k2.textFillProperty(), Color.LIGHTGREEN)),
                         new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textFillProperty(), Color.LIGHTGREEN)));
                 charColor.play();
+                // TODO complete the new employee initiation and insertion
+                //add a successfully employed label 
+                Label success = new Label("Successfully Employed!");
+                success.setFont(font2);
+                success.setTextFill(Color.LIGHTGREEN);
+                success.setTranslateX(400);
+                success.setTranslateY(300);
                 Timeline checkMark = new Timeline();
                 checkMark.getKeyFrames().addAll(
                         new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textFillProperty(), Color.LIGHTGREEN)),
                         new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textProperty(), "\uD83D\uDC4C")));
+                        scrollBarPane.getChildren().add(success);
                 checkMark.play();
                 // TODO employee successfully hired and added to the company
             }
         };
         insertBt.setOnAction(insert);
-
         Button mergeFilesBt = new Button(
                 "Merge Files");
         mergeFilesBt.setFont(font);
