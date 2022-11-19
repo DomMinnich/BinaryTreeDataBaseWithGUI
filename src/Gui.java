@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -248,7 +249,7 @@ public class Gui extends Application {
                 timeline.setCycleCount(Timeline.INDEFINITE);
                 timeline.setAutoReverse(true);
                 KeyValue kv = new KeyValue(arrow.translateXProperty(), 850);
-                KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
+                KeyFrame kf = new KeyFrame(Duration.millis(800), kv);
                 timeline.getKeyFrames().add(kf);
                 timeline.play();
 
@@ -898,8 +899,150 @@ public class Gui extends Application {
                 if (binaryTree.contains(result)) {
                     employeesArray.retreiveAtIndex(binaryTree.getRecordNum(result)).setFired(true);
                     binaryTree.delete(result);
+
+                    Label pipe = new Label("|");
+                    pipe.setFont(font2);
+                    pipe.setTextFill(Color.LIGHTGREEN);
+                    pipe.setTranslateX(500);
+                    pipe.setTranslateY(100);
+
+                    Label pipe2 = new Label("|");
+                    pipe2.setFont(font2);
+                    pipe2.setTextFill(Color.LIGHTGREEN);
+                    pipe2.setTranslateX(500);
+                    pipe2.setTranslateY(200);
+
+                    Label pipe3 = new Label("|");
+                    pipe3.setFont(font2);
+                    pipe3.setTextFill(Color.LIGHTGREEN);
+                    pipe3.setTranslateX(500);
+                    pipe3.setTranslateY(300);
+
+                    Label cM1 = new Label("\u2705");
+                    // set font size to 20
+                    cM1.setFont(font2);
+                    cM1.setTextFill(Color.LIGHTGREEN);
+                    cM1.setTranslateX(500);
+                    cM1.setTranslateY(100);
+
+                    Label cM2 = new Label("\u2705");
+                    // set font size to 20
+                    cM2.setFont(font2);
+                    cM2.setTextFill(Color.LIGHTGREEN);
+                    cM2.setTranslateX(500);
+                    cM2.setTranslateY(200);
+
+                    Label cM3 = new Label("\u2705");
+                    // set font size to 20
+                    cM3.setFont(font2);
+                    cM3.setTextFill(Color.LIGHTGREEN);
+                    cM3.setTranslateX(500);
+                    cM3.setTranslateY(300);
+
+                    // make timeline to spin pipe label for 2 seconds
+                    Timeline spin = new Timeline();
+                    spin.getKeyFrames()
+                            .add(new KeyFrame(Duration.seconds(2), new KeyValue(pipe.rotateProperty(), 360)));
+
+                    Timeline spin2 = new Timeline();
+                    spin2.getKeyFrames()
+                            .add(new KeyFrame(Duration.seconds(2), new KeyValue(pipe2.rotateProperty(), 360)));
+
+                    Timeline spin3 = new Timeline();
+                    spin3.getKeyFrames()
+                            .add(new KeyFrame(Duration.seconds(2), new KeyValue(pipe3.rotateProperty(), 360)));
+
+                    // make label "Calling Security To Escort Employee Out Of The Building"
+                    Label employeeFired = new Label("Calling Security To Escort Employee Out Of The Building");
+                    employeeFired.setFont(font5);
+                    employeeFired.setTextFill(Color.RED);
+                    employeeFired.setTranslateX(10);
+                    employeeFired.setTranslateY(100);
+                    // add pipe and employeeFired to the pane
+                    // play spin timeline for 2 seconds
+
+                    // Make label saying "Security Alerted And Are On Their Way"
+                    Label securityAlerted = new Label("Security Alerted And Are On Their Way");
+                    securityAlerted.setFont(font5);
+                    securityAlerted.setTextFill(Color.YELLOW);
+                    securityAlerted.setTranslateX(10);
+                    securityAlerted.setTranslateY(200);
+                    // when spin timeline is done, add securityAlerted to the pane
+
+                    // Make label saying "Employee Thrown Out Of The Building, And Access Revoked"
+                    Label employeeThrownOut = new Label("Employee Thrown Out Of The Building, And Access Revoked");
+                    employeeThrownOut.setFont(font5);
+                    employeeThrownOut.setTextFill(Color.LIGHTGREEN);
+                    employeeThrownOut.setTranslateX(10);
+                    employeeThrownOut.setTranslateY(300);
+
+                    spin.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            scrollBarPane.getChildren().clear();
+                            scrollBarPane.getChildren().addAll(sl, blueStart, help, securityAlerted, employeeFired, cM1,
+                                    pipe2);
+                            spin2.play();
+                        }
+                    });
+
+                    spin2.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            scrollBarPane.getChildren().clear();
+                            scrollBarPane.getChildren().addAll(sl, blueStart, help, securityAlerted, employeeThrownOut,
+                                    employeeFired, cM1, cM2, pipe3);
+                            spin3.play();
+                        }
+                    });
+
+                    Timeline dragDown = new Timeline();
+                    dragDown.getKeyFrames().add(new KeyFrame(Duration.seconds(2), new KeyValue(cM1.translateYProperty(),
+                            700, Interpolator.EASE_BOTH)));
+                    dragDown.getKeyFrames().add(new KeyFrame(Duration.seconds(2), new KeyValue(cM2.translateYProperty(),
+                            700, Interpolator.EASE_BOTH)));
+                    dragDown.getKeyFrames().add(new KeyFrame(Duration.seconds(2), new KeyValue(cM3.translateYProperty(),
+                            700, Interpolator.EASE_BOTH)));
+                    dragDown.getKeyFrames()
+                            .add(new KeyFrame(Duration.seconds(2), new KeyValue(employeeFired.translateYProperty(),
+                                    700, Interpolator.EASE_BOTH)));
+                    dragDown.getKeyFrames()
+                            .add(new KeyFrame(Duration.seconds(2), new KeyValue(securityAlerted.translateYProperty(),
+                                    700, Interpolator.EASE_BOTH)));
+                    dragDown.getKeyFrames()
+                            .add(new KeyFrame(Duration.seconds(2), new KeyValue(employeeThrownOut.translateYProperty(),
+                                    700, Interpolator.EASE_BOTH)));
+
+                    Label decoy = new Label(" ");
+                    Timeline decoyDisappear = new Timeline();
+                    decoyDisappear.getKeyFrames()
+                            .add(new KeyFrame(Duration.seconds(1), new KeyValue(decoy.opacityProperty(), 0)));
+
+                    spin3.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            scrollBarPane.getChildren().clear();
+                            scrollBarPane.getChildren().addAll(sl, blueStart, help, employeeFired, securityAlerted,
+                                    employeeThrownOut, cM1, cM2, cM3);
+                            decoyDisappear.play();
+                        }
+                    });
+
+                    dragDown.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                           searchBt.fire();
+                        }
+                    });
+
+                    decoyDisappear.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            dragDown.play();
+                        }
+                    });
                     Label employeeDeleted = new Label(
-                            "Would Not Want \nTo Be That Employee\n\t:(\nEmployee Fired & Deleted");
+                            "Would Not Want \nTo Be This Guy");
                     employeeDeleted.setFont(font3);
                     employeeDeleted.setTextFill(Color.LIGHTGREEN);
                     employeeDeleted.setTranslateX(100);
@@ -913,8 +1056,9 @@ public class Gui extends Application {
                     fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            scrollBarPane.getChildren().remove(employeeDeleted);
-                            searchBt.fire();
+                            spin.play();
+                            scrollBarPane.getChildren().clear();
+                            scrollBarPane.getChildren().addAll(sl, blueStart, help, pipe, employeeFired);
                         }
                     });
                 } else {
@@ -1111,20 +1255,18 @@ public class Gui extends Application {
                         new KeyFrame(Duration.seconds(6.6), new KeyValue(k2.textFillProperty(), Color.LIGHTGREEN)),
                         new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textFillProperty(), Color.LIGHTGREEN)));
                 charColor.play();
-                // TODO complete the new employee initiation and insertion
-                //add a successfully employed label 
-                Label success = new Label("Successfully Employed!");
+                Label success = new Label("Successfully Employed!\n" + newEmployee.toPrinter());
                 success.setFont(font2);
-                success.setTextFill(Color.LIGHTGREEN);
-                success.setTranslateX(400);
+                success.setTextFill(Color.YELLOW);
+                success.setTranslateX(10);
                 success.setTranslateY(300);
                 Timeline checkMark = new Timeline();
                 checkMark.getKeyFrames().addAll(
                         new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textFillProperty(), Color.LIGHTGREEN)),
                         new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textProperty(), "\uD83D\uDC4C")));
-                        scrollBarPane.getChildren().add(success);
                 checkMark.play();
-                // TODO employee successfully hired and added to the company
+                // once checkmark is displayed, add the success label
+                checkMark.setOnFinished(ev -> scrollBarPane.getChildren().add(success));
             }
         };
         insertBt.setOnAction(insert);
