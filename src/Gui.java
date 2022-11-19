@@ -45,9 +45,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Gui extends Application {
-
-    // TODO make pane to cover the side panel except for the quit button
-
     // setter and getter for and Employee object
     private Employee employee;
 
@@ -92,6 +89,7 @@ public class Gui extends Application {
         Font font = Font.font("yugothic", FontWeight.BOLD, FontPosture.ITALIC, 10);
         Font font2 = Font.font("Monospaced", FontWeight.BOLD, FontPosture.REGULAR, 30);
         Font font3 = Font.font("Monospaced", FontWeight.BOLD, FontPosture.REGULAR, 60);
+        Font font5 = Font.font("yugothic", FontWeight.BOLD, FontPosture.ITALIC, 15);
         Color rgb = Color.rgb(65, 126, 192);
 
         // Boxes
@@ -144,6 +142,7 @@ public class Gui extends Application {
         menuBlocker.setTranslateX(0);
         menuBlocker.setTranslateY(-20);
         menuBlocker.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
+        ComboBox<String> employDataBox = new ComboBox<String>();
 
         // Scrolling Pane
         Pane scrollBarPane = new Pane();
@@ -453,9 +452,15 @@ public class Gui extends Application {
                 searchLabel.setTextFill(Color.WHITE);
                 scrollBarPane.getChildren().add(searchLabel);
 
+
+
+//! ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
                 // new text field for search by position
                 TextField searchField2 = new TextField();
-                searchField2.setPromptText("Enter Position Ex: Manager");
+                searchField2.setPromptText("Enter Position Ex: Sales");
                 searchField2.setTranslateX(200);
                 searchField2.setTranslateY(300);
                 searchField2.setMaxSize(200, 50);
@@ -466,22 +471,88 @@ public class Gui extends Application {
                     public void handle(KeyEvent event) {
                         if (event.getCode() == KeyCode.ENTER) {
                             if (!searchField2.getText().isEmpty()) {
-                                String pos = "";
+                                String idSearch2 = "";
+                                String firstNameSearch2 = "";
+                                String lastNameSearch2 = "";
+                                String positionSearch2 = "";
+                                String siteSearch2 = "";
+//TODO turn off combobox for this search
                                 for (int i = 0; i < employeesArray.size(); i++) {
-                                    if (employeesArray.retreiveAtIndex(i).getPosition()
-                                            .equals(searchField2.getText())) {
-                                        pulse.play();
-                                        setEmployee(employeesArray.retreiveAtIndex(i));
-                                        scrollBarPane.getChildren().clear();
-                                        scrollBarPane.getChildren().addAll(sl, blueStart, help);
-                                        pos += employeesArray.retreiveAtIndex(i).getFirstName() + " "
-                                                + employeesArray.retreiveAtIndex(i).getLastName() + "\n";
-//TODO fix other search methos
-                                    }
+                                    if (employeesArray.retreiveAtIndex(i).getPosition().equals(searchField2.getText())&& employeesArray.retreiveAtIndex(i).getFired() == false) {
 
+                                        idSearch2 += employeesArray.retreiveAtIndex(i).getEmployeeID()+"\n";
+                                        firstNameSearch2 += employeesArray.retreiveAtIndex(i).getFirstName()+"\n";
+                                        lastNameSearch2 += employeesArray.retreiveAtIndex(i).getLastName()+"\n";
+                                        positionSearch2 += employeesArray.retreiveAtIndex(i).getPosition()+"\n";
+                                        siteSearch2 += employeesArray.retreiveAtIndex(i).getSite()+"\n";
+                                    }
                                 }
-                                employeeFound.setText(pos);
-                                if (pos == "") {
+                                Label idLabel2 = new Label("ID:");
+                                idLabel2.setFont(font5);
+                                idLabel2.setTranslateX(10);
+                                idLabel2.setTranslateY(100);
+                                idLabel2.setTextFill(Color.YELLOW);
+                                scrollBarPane.getChildren().add(idLabel2);
+                                Label firstNameLabel2 = new Label("First Name:");
+                                firstNameLabel2.setFont(font5);
+                                firstNameLabel2.setTranslateX(150);
+                                firstNameLabel2.setTranslateY(100);
+                                firstNameLabel2.setTextFill(Color.YELLOW);
+                                scrollBarPane.getChildren().add(firstNameLabel2);
+                                Label lastNameLabel2 = new Label("Last Name:");
+                                lastNameLabel2.setFont(font5);
+                                lastNameLabel2.setTranslateX(300);
+                                lastNameLabel2.setTranslateY(100);
+                                lastNameLabel2.setTextFill(Color.YELLOW);
+                                scrollBarPane.getChildren().add(lastNameLabel2);
+                                Label positionLabel2 = new Label("Position:");
+                                positionLabel2.setFont(font5);
+                                positionLabel2.setTranslateX(450);
+                                positionLabel2.setTranslateY(100);
+                                positionLabel2.setTextFill(Color.YELLOW);
+                                scrollBarPane.getChildren().add(positionLabel2);
+                                Label siteLabel2 = new Label("Site:");
+                                siteLabel2.setFont(font5);
+                                siteLabel2.setTranslateX(600);
+                                siteLabel2.setTranslateY(100);
+                                siteLabel2.setTextFill(Color.YELLOW);
+                                scrollBarPane.getChildren().add(siteLabel2);
+                                Label idLabelData2 = new Label(idSearch2);
+                                idLabelData2.setFont(font5);
+                                idLabelData2.setTranslateX(10);
+                                idLabelData2.setTranslateY(150);
+                                idLabelData2.setTextFill(Color.WHITE);
+                                scrollBarPane.getChildren().add(idLabelData2);
+                                Label firstNameLabelData2 = new Label(firstNameSearch2);
+                                firstNameLabelData2.setFont(font5);
+                                firstNameLabelData2.setTranslateX(150);
+                                firstNameLabelData2.setTranslateY(150);
+                                firstNameLabelData2.setTextFill(Color.WHITE);
+                                scrollBarPane.getChildren().add(firstNameLabelData2);
+                                Label lastNameLabelData2 = new Label(lastNameSearch2);
+                                lastNameLabelData2.setFont(font5);
+                                lastNameLabelData2.setTranslateX(300);
+                                lastNameLabelData2.setTranslateY(150);
+                                lastNameLabelData2.setTextFill(Color.WHITE);
+                                scrollBarPane.getChildren().add(lastNameLabelData2);
+                                Label positionLabelData2 = new Label(positionSearch2);
+                                positionLabelData2.setFont(font5);
+                                positionLabelData2.setTranslateX(450);
+                                positionLabelData2.setTranslateY(150);
+                                positionLabelData2.setTextFill(Color.WHITE);
+                                scrollBarPane.getChildren().add(positionLabelData2);
+                                Label siteLabelData2 = new Label(siteSearch2);
+                                siteLabelData2.setFont(font5);
+                                siteLabelData2.setTranslateX(600);
+                                siteLabelData2.setTranslateY(150);
+                                siteLabelData2.setTextFill(Color.WHITE);
+                                scrollBarPane.getChildren().add(siteLabelData2);
+                                
+                                employeeFound.setText(searchField2.getText() + " Personnel");
+                                employDataBox.setDisable(true);
+                               
+                        
+                                if (idSearch2 == "") {
                                     Alert a = new Alert(Alert.AlertType.ERROR,
                                             "Invalid Position or Search Format", ButtonType.OK);
                                     a.showAndWait();
@@ -504,48 +575,60 @@ public class Gui extends Application {
                     }
                 });
 
+
+
+//! ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
                 // new text field for search by site
-                TextField search3Field = new TextField();
-                search3Field.setPromptText("Enter Site Ex: Chicago");
-                search3Field.setTranslateX(700);
-                search3Field.setTranslateY(300);
-                search3Field.setMaxSize(200, 50);
-                search3Field.setMinSize(200, 50);
-                scrollBarPane.getChildren().add(search3Field);
-                search3Field.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                TextField searchField3 = new TextField();
+                searchField3.setPromptText("Enter Site Ex: Chicago");
+                searchField3.setTranslateX(700);
+                searchField3.setTranslateY(300);
+                searchField3.setMaxSize(200, 50);
+                searchField3.setMinSize(200, 50);
+                scrollBarPane.getChildren().add(searchField3);
+                searchField3.setOnKeyPressed(new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent event) {
                         if (event.getCode() == KeyCode.ENTER) {
-                            if (!search3Field.getText().isEmpty()) {
+                            if (!searchField3.getText().isEmpty()) {
+                                String site = "";
                                 for (int i = 0; i < employeesArray.size(); i++) {
-                                    if (employeesArray.retreiveAtIndex(i).getSite() == search3Field.getText()) {
+                                    if (employeesArray.retreiveAtIndex(i).getSite()
+                                            .equals(searchField3.getText())&& employeesArray.retreiveAtIndex(i).getFired() == false) {
                                         pulse.play();
                                         setEmployee(employeesArray.retreiveAtIndex(i));
                                         scrollBarPane.getChildren().clear();
                                         scrollBarPane.getChildren().addAll(sl, blueStart, help);
-                                        employeeFound.setText(employeesArray.retreiveAtIndex(i).getFirstName() + " "
-                                                + employeesArray.retreiveAtIndex(i).getLastName());
-                                        employeeFound.setFont(font3);
-                                        employeeFound.setTextFill(Color.LIGHTGREEN);
-                                        employeeFound.setTranslateX(340);
-                                        employeeFound.setTranslateY(10);
-                                        employeeFound2.setFont(font3);
-                                        employeeFound2.setTextFill(Color.WHITE);
-                                        employeeFound2.setTranslateX(10);
-                                        employeeFound2.setTranslateY(10);
-                                        scrollBarPane.getChildren().addAll(employeeFound, employeeFound2);
-                                    } else {
-                                        Alert a = new Alert(Alert.AlertType.ERROR,
-                                                "Invalid Site or Search Format", ButtonType.OK);
-                                        a.showAndWait();
-                                        // clear the text field
-                                        search3Field.clear();
+                                        site += employeesArray.retreiveAtIndex(i).getFirstName() + " "
+                                                + employeesArray.retreiveAtIndex(i).getLastName() + "\n";
                                     }
+
                                 }
+                                employeeFound.setText(site);
+                                if (site == "") {
+                                    Alert a = new Alert(Alert.AlertType.ERROR,
+                                            "Invalid Site or Search Format", ButtonType.OK);
+                                    a.showAndWait();
+                                    // clear the text field
+                                    searchField3.clear();
+                                } else {
+                                    employeeFound.setFont(font3);
+                                    employeeFound.setTextFill(Color.LIGHTGREEN);
+                                    employeeFound.setTranslateX(340);
+                                    employeeFound.setTranslateY(10);
+                                    employeeFound2.setFont(font3);
+                                    employeeFound2.setTextFill(Color.WHITE);
+                                    employeeFound2.setTranslateX(10);
+                                    employeeFound2.setTranslateY(10);
+                                    scrollBarPane.getChildren().addAll(employeeFound, employeeFound2);
+                                }
+
                             }
                         }
                     }
                 });
+
 
                 // TODO: add other search functions (by name, by site, by position, etc)
 
@@ -608,6 +691,7 @@ public class Gui extends Application {
                 });
 
                 binaryTree.contains(searchField.getText());
+
                 // if any of the search fields are clicked, put the other search fields to half
                 // opacity
                 searchField.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -615,7 +699,7 @@ public class Gui extends Application {
                     public void handle(MouseEvent event) {
                         searchField.setOpacity(1);
                         searchField2.setOpacity(0.5);
-                        search3Field.setOpacity(0.5);
+                        searchField3.setOpacity(0.5);
                     }
                 });
                 searchField2.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -623,13 +707,13 @@ public class Gui extends Application {
                     public void handle(MouseEvent event) {
                         searchField2.setOpacity(1);
                         searchField.setOpacity(0.5);
-                        search3Field.setOpacity(0.5);
+                        searchField3.setOpacity(0.5);
                     }
                 });
-                search3Field.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                searchField3.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        search3Field.setOpacity(1);
+                        searchField3.setOpacity(1);
                         searchField.setOpacity(0.5);
                         searchField2.setOpacity(0.5);
                     }
@@ -663,7 +747,6 @@ public class Gui extends Application {
         dataBoxTitle.setTextFill(Color.LIGHTGREEN);
         Text item = new Text();
         item.setFont(font);
-        ComboBox<String> employDataBox = new ComboBox<String>();
         employDataBox.setMaxSize(120, 50);
         employDataBox.setMinSize(120, 50);
         employDataBox.getItems().addAll("ID", "First Name", "Last Name", "Position", "Site");
@@ -721,15 +804,11 @@ public class Gui extends Application {
                 employeeDataBase.setTranslateY(10);
                 Label chartLabel = new Label(
                         "Employee ID\t\t  First Name\t\t       Last Name\t\t   Position\t\t       Site");
-                Font font5 = Font.font("yugothic", FontWeight.BOLD, FontPosture.ITALIC, 15);
+               
                 chartLabel.setFont(font5);
                 chartLabel.setTextFill(Color.YELLOW);
                 chartLabel.setTranslateX(10);
                 chartLabel.setTranslateY(80);
-
-                scrollBarPane.getChildren().clear();
-                scrollBarPane.getChildren().addAll(sl, blueStart, help, employeeDataBase, chartLabel);
-
                 Label idLabel = new Label("ID");
                 String idStr = "";
                 idLabel.setFont(font5);
@@ -760,6 +839,10 @@ public class Gui extends Application {
                 siteLabel.setTextFill(Color.WHITE);
                 siteLabel.setTranslateX(600);
                 siteLabel.setTranslateY(150);
+                
+                scrollBarPane.getChildren().clear();
+                scrollBarPane.getChildren().addAll(sl, blueStart, help, employeeDataBase, chartLabel);
+
 
                 for (int i = 0; i < employeesArray.size(); i++) {
                     // if the employee is not firee
