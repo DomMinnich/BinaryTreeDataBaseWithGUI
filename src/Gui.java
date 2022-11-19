@@ -23,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -897,6 +898,17 @@ public class Gui extends Application {
                 dialog.showAndWait();
                 String result = dialog.getResult();
                 if (binaryTree.contains(result)) {
+                    //make confirmation dialog
+                    Alert alert = new Alert(AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation Dialog");
+                    alert.setHeaderText("Are you sure you want to delete this employee?");
+                    alert.setContentText("Are you sure you want to let them go?");
+                    Optional<ButtonType> result2 = alert.showAndWait();
+                    if (result2.get() == ButtonType.OK) {
+                       
+                   
+
+                    
                     employeesArray.retreiveAtIndex(binaryTree.getRecordNum(result)).setFired(true);
                     binaryTree.delete(result);
 
@@ -1042,7 +1054,7 @@ public class Gui extends Application {
                         }
                     });
                     Label employeeDeleted = new Label(
-                            "Would Not Want \nTo Be This Guy");
+                            "Would Not Want \nTo Be This Ex-Employee \nRight Now");
                     employeeDeleted.setFont(font3);
                     employeeDeleted.setTextFill(Color.LIGHTGREEN);
                     employeeDeleted.setTranslateX(100);
@@ -1067,7 +1079,11 @@ public class Gui extends Application {
                     a.showAndWait();
                 }
             }
+
+            }
+
         };
+
         deleteBt.setOnAction(delete);
 
         //////////////////// Insert ////////////////////
