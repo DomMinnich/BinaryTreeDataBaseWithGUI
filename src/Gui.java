@@ -643,6 +643,7 @@ public class Gui extends Application {
                                 if (binaryTree.contains(searchField.getText()) == true) {
                                     Employee emp = employeesArray
                                             .retreiveAtIndex(binaryTree.getRecordNum(searchField.getText()));
+                                    System.out.println(emp.getFired());
                                     if (emp.getFired() == false) {
                                         pulse.play();
                                         setEmployee(emp);
@@ -681,10 +682,6 @@ public class Gui extends Application {
                     }
                 });
 
-                binaryTree.contains(searchField.getText());
-
-                // if any of the search fields are clicked, put the other search fields to half
-                // opacity
                 searchField.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
@@ -906,7 +903,7 @@ public class Gui extends Application {
                     alert.setHeaderText("Are you sure you want to delete this employee?");
                     alert.setContentText("Are you sure you want to let them go?");
                     Optional<ButtonType> result2 = alert.showAndWait();
-                    if (result2.get() == ButtonType.OK) {
+                    if (result2.get() == ButtonType.OK &&  employeesArray.retreiveAtIndex(binaryTree.getRecordNum(result)).getFired() == false) {
 
                         employeesArray.retreiveAtIndex(binaryTree.getRecordNum(result)).setFired(true);
                         binaryTree.delete(result);
@@ -1085,7 +1082,14 @@ public class Gui extends Application {
                                 ButtonType.OK);
                         a.showAndWait();
                     }
+
                 }
+                else {
+                    Alert a = new Alert(Alert.AlertType.ERROR, "Error Employee Not Found",
+                            ButtonType.OK);
+                    a.showAndWait();
+                }
+                
 
             }
 
