@@ -1,5 +1,3 @@
-import java.io.File;
-
 public class DataBase {
 
     SetArr<Employee> employeesArray = new SetArr<Employee>();

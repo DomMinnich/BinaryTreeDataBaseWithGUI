@@ -51,7 +51,7 @@ public class Employee {
         return Site;
     }
 
-    public void setSite(String site) { 
+    public void setSite(String site) {
         Site = site;
     }
 
@@ -62,20 +62,21 @@ public class Employee {
     public void setFired(Boolean fired) {
         this.fired = fired;
     }
-    
 
+    // First name then last name: Gui purposes
     public String toStringEmp() {
-        return EmployeeID + "\t\t" + FirstName + "\t\t" + LastName + "\t\t" + Position + "\t\t" + Site+"\n";
+        return EmployeeID + "\t\t" + FirstName + "\t\t" + LastName + "\t\t" + Position + "\t\t" + Site + "\n";
     }
 
-public String toStringFL(){
-        return FirstName + "\t" + LastName + "\t" + Position + "\t" + Site+"\n";
+    // First name then last name
+    public String toStringFL() {
+        return FirstName + "\t" + LastName + "\t" + Position + "\t" + Site + "\n";
     }
 
-    public String toPrinter(){
-        return LastName + "\t" + FirstName + "\t" + Position + "\t" + Site+"\n";
+    // last name then first name (print format)
+    public String toPrinter() {
+        return LastName + "\t" + FirstName + "\t" + Position + "\t" + Site + "\n";
     }
-
 
     public boolean equals(Employee other) {
         return this.EmployeeID.equals(other.EmployeeID);

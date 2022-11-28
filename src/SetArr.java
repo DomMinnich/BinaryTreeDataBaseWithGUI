@@ -1,5 +1,5 @@
-public class SetArr<E> {           //Array that holds the emplyee data
-                                   //Maps class will map the array indexes for easy access
+public class SetArr<E> {
+
     private E[] set;
     private int size = 1;
 

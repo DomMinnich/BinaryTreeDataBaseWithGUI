@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Optional;
 import java.util.Scanner;
-
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -17,7 +16,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -46,8 +44,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-//TODO Still need to make occurance numbers work (-01) start withing the fileIO class then look at insert method
 
 public class Gui extends Application {
     private Employee employee;
@@ -360,8 +356,6 @@ public class Gui extends Application {
         Timeline pulse = new Timeline();
         pulse.setCycleCount(Timeline.INDEFINITE);
         pulse.setAutoReverse(true);
-        // change color of dataBoxTitle to green then yellow, then red, then blue, then
-        // green
         KeyValue kv005 = new KeyValue(dataBoxTitle.textFillProperty(), Color.GREEN);
         KeyFrame kf006 = new KeyFrame(Duration.millis(1000), kv005);
         KeyValue kv007 = new KeyValue(dataBoxTitle.textFillProperty(), Color.YELLOW);
@@ -790,7 +784,7 @@ public class Gui extends Application {
                 employeeDataBase.setTranslateY(10);
 
                 Label chartLabel = new Label(
-                        "Employee ID\t\t  First Name\t\t       Last Name\t\t   Position\t\t       Site");
+                        "Employee ID\t\tFirst Name\t\tLast Name\t\tPosition\t\tSite");
                 chartLabel.setFont(font5);
                 chartLabel.setTextFill(Color.YELLOW);
                 chartLabel.setTranslateX(10);
@@ -897,13 +891,13 @@ public class Gui extends Application {
                 dialog.showAndWait();
                 String result = dialog.getResult();
                 if (binaryTree.contains(result)) {
-                    // make confirmation dialog
                     Alert alert = new Alert(AlertType.CONFIRMATION);
                     alert.setTitle("Confirmation Dialog");
                     alert.setHeaderText("Are you sure you want to delete this employee?");
                     alert.setContentText("Are you sure you want to let them go?");
                     Optional<ButtonType> result2 = alert.showAndWait();
-                    if (result2.get() == ButtonType.OK &&  employeesArray.retreiveAtIndex(binaryTree.getRecordNum(result)).getFired() == false) {
+                    if (result2.get() == ButtonType.OK
+                            && employeesArray.retreiveAtIndex(binaryTree.getRecordNum(result)).getFired() == false) {
 
                         employeesArray.retreiveAtIndex(binaryTree.getRecordNum(result)).setFired(true);
                         binaryTree.delete(result);
@@ -927,27 +921,23 @@ public class Gui extends Application {
                         pipe3.setTranslateY(300);
 
                         Label cM1 = new Label("\u2705");
-                        // set font size to 20
                         cM1.setFont(font2);
                         cM1.setTextFill(Color.LIGHTGREEN);
                         cM1.setTranslateX(800);
                         cM1.setTranslateY(100);
 
                         Label cM2 = new Label("\u2705");
-                        // set font size to 20
                         cM2.setFont(font2);
                         cM2.setTextFill(Color.LIGHTGREEN);
                         cM2.setTranslateX(800);
                         cM2.setTranslateY(200);
 
                         Label cM3 = new Label("\u2705");
-                        // set font size to 20
                         cM3.setFont(font2);
                         cM3.setTextFill(Color.LIGHTGREEN);
                         cM3.setTranslateX(800);
                         cM3.setTranslateY(300);
 
-                        // make timeline to spin pipe label for 2 seconds
                         Timeline spin = new Timeline();
                         spin.getKeyFrames()
                                 .add(new KeyFrame(Duration.seconds(2), new KeyValue(pipe.rotateProperty(), 360)));
@@ -960,25 +950,18 @@ public class Gui extends Application {
                         spin3.getKeyFrames()
                                 .add(new KeyFrame(Duration.seconds(2), new KeyValue(pipe3.rotateProperty(), 360)));
 
-                        // make label "Calling Security To Escort Employee Out Of The Building"
                         Label employeeFired = new Label("Calling Security To Escort Employee Out Of The Building");
-//TODO
                         employeeFired.setFont(font6);
                         employeeFired.setTextFill(Color.RED);
                         employeeFired.setTranslateX(10);
                         employeeFired.setTranslateY(100);
-                        // add pipe and employeeFired to the pane
-                        // play spin timeline for 2 seconds
 
-                        // Make label saying "Security Alerted And Are On Their Way"
                         Label securityAlerted = new Label("Security Alerted And Are On Their Way");
                         securityAlerted.setFont(font6);
                         securityAlerted.setTextFill(Color.YELLOW);
                         securityAlerted.setTranslateX(10);
                         securityAlerted.setTranslateY(200);
-                        // when spin timeline is done, add securityAlerted to the pane
 
-                        // Make label saying "Employee Thrown Out Of The Building, And Access Revoked"
                         Label employeeThrownOut = new Label("Employee Thrown Out Of The Building, And Access Revoked");
                         employeeThrownOut.setFont(font6);
                         employeeThrownOut.setTextFill(Color.LIGHTGREEN);
@@ -1083,13 +1066,11 @@ public class Gui extends Application {
                         a.showAndWait();
                     }
 
-                }
-                else {
+                } else {
                     Alert a = new Alert(Alert.AlertType.ERROR, "Error Employee Not Found",
                             ButtonType.OK);
                     a.showAndWait();
                 }
-                
 
             }
 
@@ -1105,7 +1086,6 @@ public class Gui extends Application {
         insertBt.setMinSize(120, 50);
         EventHandler<ActionEvent> insert = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                // make a textinputdialog for each field
                 TextInputDialog newFirstName = new TextInputDialog("Ex: John");
                 newFirstName.setTitle("Insert New Employee");
                 newFirstName.setHeaderText("Insert New Employee");
@@ -1293,7 +1273,6 @@ public class Gui extends Application {
                         new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textFillProperty(), Color.LIGHTGREEN)),
                         new KeyFrame(Duration.seconds(6.9), new KeyValue(s.textProperty(), "\uD83D\uDC4C")));
                 checkMark.play();
-                // once checkmark is displayed, add the success label
                 checkMark.setOnFinished(ev -> scrollBarPane.getChildren().add(success));
             }
         };
@@ -1328,10 +1307,10 @@ public class Gui extends Application {
                     // inset employee into the binary search tree
                     binaryTree.insert(employeeID);
                 }
-                scanner.close();    
+                scanner.close();
                 DisplayAllBt.fire();
             }
-            
+
         };
         mergeFilesBt.setOnAction(merge);
 
