@@ -238,7 +238,6 @@ public class Gui extends Application {
                 DataBase dataBase = new DataBase();
                 setEmployeesArray(dataBase.getEmployeesArray());
                 setBinaryTree(dataBase.getBinaryTree());
-                System.out.println("this is the tostring for arr");
                 System.out.println(employeesArray.toString());
 
                 // timeline and animation for arrow to move a little left then right
